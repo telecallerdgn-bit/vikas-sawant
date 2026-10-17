@@ -56,9 +56,9 @@ export default function Home() {
         </div>
 
         <p className="border-t pt-4 text-center text-sm text-gray-600">
-          New partner?{" "}
-          <Link href="/signup" className="font-medium text-emerald-700 underline">
-            Sign up
+          Want to become a partner?{" "}
+          <Link href="/partner-apply" className="font-medium text-emerald-700 underline">
+            Apply here
           </Link>
         </p>
       </div>

@@ -38,6 +38,15 @@ enum ShipmentStatus {
   DELIVERED
 }
 
+enum ApplicationStatus {
+  SUBMITTED
+  UNDER_REVIEW
+  MORE_INFO
+  APPROVED
+  REJECTED
+  ACTIVE
+}
+
 model User {
   id           Int      @id @default(autoincrement())
   name         String
@@ -50,18 +59,56 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
+  parentId   Int?
+  parent     User?     @relation("Sponsor", fields: [parentId], references: [id])
+  children   User[]    @relation("Sponsor")
+  districtId Int?
+  district   District? @relation("DistrictPartners", fields: [districtId], references: [id])
+
   districts District[]    @relation("DistrictAdmin")
   students  Student[]     @relation("PartnerStudents")
   orders    Order[]       @relation("PartnerOrders")
   ledger    LedgerEntry[] @relation("UserLedger")
+
+  applicationsSponsored PartnerApplication[] @relation("ApplicationSponsor")
+  application           PartnerApplication?  @relation("ApplicationUser")
 }
 
 model District {
   id        Int      @id @default(autoincrement())
   name      String   @unique
+  code      String?  @unique
   adminId   Int?
   admin     User?    @relation("DistrictAdmin", fields: [adminId], references: [id])
+  partners  User[]   @relation("DistrictPartners")
   createdAt DateTime @default(now())
+
+  applications PartnerApplication[]
+}
+
+model PartnerApplication {
+  id           Int               @id @default(autoincrement())
+  name         String
+  email        String
+  mobile       String
+  passwordHash String
+  panMasked    String?
+  experience   String            @db.Text
+  districtId   Int?
+  district     District?         @relation(fields: [districtId], references: [id])
+  sponsorId    Int?
+  sponsor      User?             @relation("ApplicationSponsor", fields: [sponsorId], references: [id])
+  status       ApplicationStatus @default(SUBMITTED)
+  note         String?           @db.Text
+  feePaid      Boolean           @default(false)
+  feePaidAt    DateTime?
+  userId       Int?              @unique
+  user         User?             @relation("ApplicationUser", fields: [userId], references: [id])
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  @@index([email])
+  @@index([status])
 }
 
 model Course {
