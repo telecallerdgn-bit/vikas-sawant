@@ -25,13 +25,13 @@ export async function proxy(req: NextRequest) {
     }
   }
 
-  if (pathname === "/login" && session) {
-    return NextResponse.redirect(new URL(roleHome[session.role] ?? "/", req.url));
+  if ((pathname === "/login" || pathname === "/") && session) {
+    return NextResponse.redirect(new URL(roleHome[session.role] ?? "/login", req.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/login", "/admin/:path*", "/student/:path*", "/partner/:path*", "/district/:path*", "/sub-super/:path*", "/finance/:path*", "/packing/:path*"],
+  matcher: ["/", "/login", "/admin/:path*", "/student/:path*", "/partner/:path*", "/district/:path*", "/sub-super/:path*", "/finance/:path*", "/packing/:path*"],
 };

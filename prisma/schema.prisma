@@ -17,13 +17,121 @@ enum Role {
   ADMIN
 }
 
+enum CourseMode {
+  LIVE_STUDY
+  HYBRID
+  STUDY_ONLY
+  ONLINE_PRERECORDED
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum ShipmentStatus {
+  TO_PACK
+  PACKED
+  DISPATCHED
+  DELIVERED
+}
+
 model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  mobile       String?  @unique
+  referralCode String?  @unique
+  password     String
+  role         Role     @default(STUDENT)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  districts District[]    @relation("DistrictAdmin")
+  students  Student[]     @relation("PartnerStudents")
+  orders    Order[]       @relation("PartnerOrders")
+  ledger    LedgerEntry[] @relation("UserLedger")
+}
+
+model District {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  adminId   Int?
+  admin     User?    @relation("DistrictAdmin", fields: [adminId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Course {
+  id        Int        @id @default(autoincrement())
+  name      String
+  mode      CourseMode
+  price     Decimal    @db.Decimal(10, 2)
+  isActive  Boolean    @default(true)
+  orders    Order[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Student {
   id        Int      @id @default(autoincrement())
   name      String
-  email     String   @unique
-  password  String
-  role      Role     @default(STUDENT)
-  isActive  Boolean  @default(true)
+  mobile    String   @unique
+  email     String?
+  partnerId Int?
+  partner   User?    @relation("PartnerStudents", fields: [partnerId], references: [id])
+  orders    Order[]
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id        Int           @id @default(autoincrement())
+  studentId Int
+  student   Student       @relation(fields: [studentId], references: [id])
+  courseId  Int
+  course    Course        @relation(fields: [courseId], references: [id])
+  partnerId Int?
+  partner   User?         @relation("PartnerOrders", fields: [partnerId], references: [id])
+  amount    Decimal       @db.Decimal(10, 2)
+  status    OrderStatus   @default(PENDING)
+  ledger    LedgerEntry[]
+  shipment  Shipment?
+  createdAt DateTime      @default(now())
+}
+
+model LedgerEntry {
+  id        Int      @id @default(autoincrement())
+  orderId   Int
+  order     Order    @relation(fields: [orderId], references: [id])
+  userId    Int?
+  user      User?    @relation("UserLedger", fields: [userId], references: [id])
+  type      String
+  amount    Decimal  @db.Decimal(10, 2)
+  createdAt DateTime @default(now())
+}
+
+model Shipment {
+  id        Int            @id @default(autoincrement())
+  orderId   Int            @unique
+  order     Order          @relation(fields: [orderId], references: [id])
+  status    ShipmentStatus @default(TO_PACK)
+  updatedAt DateTime       @updatedAt
+}
+
+model CommissionRule {
+  id                Int      @id @default(autoincrement())
+  gstPercent        Decimal  @default(18) @db.Decimal(5, 2)
+  gatewayFeePercent Decimal  @default(2) @db.Decimal(5, 2)
+  partnerPercent    Decimal  @default(40) @db.Decimal(5, 2)
+  updatedAt         DateTime @updatedAt
+}
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int?
+  action    String
+  details   String?  @db.Text
+  createdAt DateTime @default(now())
 }

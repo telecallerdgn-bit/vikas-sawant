@@ -8,6 +8,7 @@ import { roleHome } from "@/lib/roles";
 const schema = z.object({
   email: z.string().email(),
   password: z.string().min(1),
+  portal: z.string().optional(),
 });
 
 export async function POST(req: Request) {
@@ -26,6 +27,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Account band hai, admin se baat karo" }, { status: 403 });
   }
 
+  // Dropdown se chuna gaya role, user ke asli role se match hona chahiye
+  const home = roleHome[user.role] ?? "/";
+  if (body.data.portal && home.replace("/", "") !== body.data.portal) {
+    return NextResponse.json({ error: "Ye account is role ka nahi hai" }, { status: 403 });
+  }
+
   await createSession({ userId: user.id, role: user.role, name: user.name });
-  return NextResponse.json({ redirect: roleHome[user.role] ?? "/" });
+  return NextResponse.json({ redirect: home });
 }
