@@ -1,0 +1,1 @@
+export const DISPLAY = "font-[family-name:var(--font-lato)]";

@@ -2,25 +2,45 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #111827;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Brand navy (from the website) */
+  --color-brand-50: #eef3fb;
+  --color-brand-100: #dbe5f5;
+  --color-brand-200: #b7caea;
+  --color-brand-300: #87a6d8;
+  --color-brand-400: #5580c0;
+  --color-brand-500: #2f5aa3;
+  --color-brand-600: #1d4589;
+  --color-brand-700: #113575;
+  --color-brand-800: #0e2a5e;
+  --color-brand-900: #0a2046;
+  --color-brand-950: #07152f;
+
+  /* Brand gold */
+  --color-gold-50: #fffcee;
+  --color-gold-100: #fff8da;
+  --color-gold-200: #fff1b9;
+  --color-gold-300: #ffe88b;
+  --color-gold-400: #ffde59;
+  --color-gold-500: #f2c92c;
+  --color-gold-600: #d4a90f;
+  --color-gold-700: #a07d09;
+  --color-gold-800: #6f5606;
+
+  /* Brand red, for important call-to-action buttons only */
+  --color-alert: #fa0000;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
 }

@@ -11,8 +11,10 @@ export default function ExpandableText({ text }: { text: string }) {
       <p className={open || !long ? "" : "line-clamp-2"}>{text}</p>
       {long && (
         <button
+          type="button"
+          aria-expanded={open}
           onClick={() => setOpen(!open)}
-          className="mt-1 text-xs font-medium text-emerald-700 underline"
+          className="mt-1 text-xs font-medium text-brand-700 underline underline-offset-2 hover:text-brand-900"
         >
           {open ? "Show less" : "Read more"}
         </button>

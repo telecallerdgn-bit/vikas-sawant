@@ -1,29 +1,25 @@
 import { Suspense } from "react";
-import Link from "next/link";
-import LogoutButton from "@/components/LogoutButton";
-import AdminNav from "@/components/AdminNav";
-import SidebarUser from "@/components/SidebarUser";
+import { prisma } from "@/lib/prisma";
+import { getSession } from "@/lib/session";
+import AdminShell from "@/components/AdminShell";
+
+async function ShellWithUser({ children }: { children: React.ReactNode }) {
+  const [session, alerts] = await Promise.all([
+    getSession(),
+    prisma.notification.count({ where: { status: "FAILED" } }),
+  ]);
+
+  return (
+    <AdminShell name={session?.name ?? "Admin"} alerts={alerts}>
+      {children}
+    </AdminShell>
+  );
+}
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      <aside className="flex w-60 shrink-0 flex-col border-r bg-white p-4">
-        <Link href="/admin" className="text-xs font-medium uppercase tracking-wide text-gray-500">
-          ABC Academy
-        </Link>
-
-        <Suspense fallback={<p className="mb-4 mt-1 text-sm text-gray-400">Loading...</p>}>
-          <SidebarUser />
-        </Suspense>
-
-        <AdminNav />
-
-        <div className="mt-auto pt-4">
-          <LogoutButton />
-        </div>
-      </aside>
-
-      <main className="flex-1 overflow-x-auto p-6">{children}</main>
-    </div>
+    <Suspense fallback={<div className="min-h-screen bg-slate-50" />}>
+      <ShellWithUser>{children}</ShellWithUser>
+    </Suspense>
   );
 }

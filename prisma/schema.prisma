@@ -32,10 +32,15 @@ enum OrderStatus {
 }
 
 enum ShipmentStatus {
-  TO_PACK
+  AWAITING_PACKING
   PACKED
+  LABEL_GENERATED
   DISPATCHED
+  IN_TRANSIT
+  OUT_FOR_DELIVERY
   DELIVERED
+  DELIVERY_FAILED
+  RETURNED
 }
 
 enum ApplicationStatus {
@@ -45,6 +50,25 @@ enum ApplicationStatus {
   APPROVED
   REJECTED
   ACTIVE
+}
+
+enum PayoutStatus {
+  REQUESTED
+  APPROVED
+  PAID
+  REJECTED
+}
+
+enum NotificationChannel {
+  SMS
+  WHATSAPP
+  EMAIL
+}
+
+enum NotificationStatus {
+  QUEUED
+  SENT
+  FAILED
 }
 
 model User {
@@ -65,10 +89,13 @@ model User {
   districtId Int?
   district   District? @relation("DistrictPartners", fields: [districtId], references: [id])
 
-  districts District[]    @relation("DistrictAdmin")
-  students  Student[]     @relation("PartnerStudents")
-  orders    Order[]       @relation("PartnerOrders")
-  ledger    LedgerEntry[] @relation("UserLedger")
+  districts       District[]    @relation("DistrictAdmin")
+  students        Student[]     @relation("PartnerStudents")
+  orders          Order[]       @relation("PartnerOrders")
+  ledger          LedgerEntry[] @relation("UserLedger")
+  packedShipments Shipment[]    @relation("PackedShipments")
+  payouts         Payout[]      @relation("PayoutOwner")
+  reviewedPayouts Payout[]      @relation("PayoutReviewer")
 
   applicationsSponsored PartnerApplication[] @relation("ApplicationSponsor")
   application           PartnerApplication?  @relation("ApplicationUser")
@@ -123,14 +150,17 @@ model Course {
 }
 
 model Student {
-  id        Int      @id @default(autoincrement())
-  name      String
-  mobile    String   @unique
-  email     String?
-  partnerId Int?
-  partner   User?    @relation("PartnerStudents", fields: [partnerId], references: [id])
-  orders    Order[]
-  createdAt DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  name        String
+  mobile      String   @unique
+  email       String?
+  addressLine String?
+  city        String?
+  pincode     String?
+  partnerId   Int?
+  partner     User?    @relation("PartnerStudents", fields: [partnerId], references: [id])
+  orders      Order[]
+  createdAt   DateTime @default(now())
 }
 
 model Order {
@@ -150,8 +180,10 @@ model Order {
 
 model LedgerEntry {
   id        Int      @id @default(autoincrement())
-  orderId   Int
-  order     Order    @relation(fields: [orderId], references: [id])
+  orderId   Int?
+  order     Order?   @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  payoutId  Int?
+  payout    Payout?  @relation(fields: [payoutId], references: [id], onDelete: SetNull)
   userId    Int?
   user      User?    @relation("UserLedger", fields: [userId], references: [id])
   type      String
@@ -159,12 +191,70 @@ model LedgerEntry {
   createdAt DateTime @default(now())
 }
 
+model Payout {
+  id           Int           @id @default(autoincrement())
+  userId       Int
+  user         User          @relation("PayoutOwner", fields: [userId], references: [id], onDelete: Restrict)
+  amount       Decimal       @db.Decimal(10, 2)
+  status       PayoutStatus  @default(REQUESTED)
+  utr          String?       @unique
+  note         String?       @db.Text
+  requestedAt  DateTime      @default(now())
+  reviewedById Int?
+  reviewedBy   User?         @relation("PayoutReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+  paidAt       DateTime?
+  updatedAt    DateTime      @updatedAt
+  ledger       LedgerEntry[]
+
+  @@index([userId])
+  @@index([status])
+}
+
 model Shipment {
-  id        Int            @id @default(autoincrement())
-  orderId   Int            @unique
-  order     Order          @relation(fields: [orderId], references: [id])
-  status    ShipmentStatus @default(TO_PACK)
-  updatedAt DateTime       @updatedAt
+  id          Int             @id @default(autoincrement())
+  orderId     Int             @unique
+  order       Order           @relation(fields: [orderId], references: [id])
+  status      ShipmentStatus  @default(AWAITING_PACKING)
+  weightGrams Int?
+  courier     String?
+  awb         String?         @unique
+  packedAt    DateTime?
+  packedById  Int?
+  packedBy    User?           @relation("PackedShipments", fields: [packedById], references: [id])
+  events      ShipmentEvent[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model ShipmentEvent {
+  id         Int            @id @default(autoincrement())
+  shipmentId Int
+  shipment   Shipment       @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+  status     ShipmentStatus
+  note       String?
+  createdAt  DateTime       @default(now())
+
+  @@index([shipmentId])
+}
+
+model Notification {
+  id            Int                 @id @default(autoincrement())
+  channel       NotificationChannel
+  recipientName String
+  recipient     String
+  message       String              @db.Text
+  event         String
+  refType       String?
+  refId         Int?
+  status        NotificationStatus  @default(QUEUED)
+  provider      String?
+  error         String?             @db.Text
+  attempts      Int                 @default(0)
+  sentAt        DateTime?
+  createdAt     DateTime            @default(now())
+
+  @@index([status])
+  @@index([createdAt])
 }
 
 model CommissionRule {

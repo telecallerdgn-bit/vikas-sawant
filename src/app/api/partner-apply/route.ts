@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { notifyApplication } from "@/lib/notify";
 
 const schema = z.object({
   name: z.string().trim().min(3, "Enter your full name"),
@@ -84,6 +85,8 @@ export async function POST(req: Request) {
   await prisma.auditLog.create({
     data: { action: "Partner application submitted", details: `#${app.id} · ${d.name}` },
   });
+
+  await notifyApplication(app.id, "submitted"); // never throws
 
   return NextResponse.json({ ok: true }, { status: 201 });
 }

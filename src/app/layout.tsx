@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Lato } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,9 +12,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const lato = Lato({
+  variable: "--font-lato",
+  subsets: ["latin"],
+  weight: ["300", "400", "700", "900"],
+});
+
 export const metadata: Metadata = {
-  title: "ABC Academy",
-  description: "ABC Academy management portal",
+  title: "vikas-sawant",
+  description: "vikas-sawant management portal",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -22,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${lato.variable}`}
     >
       <body suppressHydrationWarning>{children}</body>
     </html>
