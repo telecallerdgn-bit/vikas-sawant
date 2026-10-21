@@ -274,19 +274,6 @@ export default function DistrictShell({
           ))}
         </nav>
 
-        {/* Logout */}
-        <div className="border-t border-white/10 p-3">
-          <button
-            onClick={logout}
-            title={collapsed ? "Log out" : undefined}
-            className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-white/5 hover:text-white ${
-              collapsed ? "lg:justify-center lg:px-0" : ""
-            }`}
-          >
-            <Svg name="logout" />
-            <span className={hide}>Log out</span>
-          </button>
-        </div>
       </aside>
 
       {/* Content */}
