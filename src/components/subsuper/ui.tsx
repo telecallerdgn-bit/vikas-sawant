@@ -19,6 +19,7 @@ export const MODE_LABEL: Record<string, string> = {
   HYBRID: "Hybrid",
   STUDY_ONLY: "Study Material Only",
   ONLINE_PRERECORDED: "Online Prerecorded",
+  LIVE_ONLY: "Live Only",
 };
 
 export const ORDER_PILL: Record<string, { label: string; cls: string }> = {

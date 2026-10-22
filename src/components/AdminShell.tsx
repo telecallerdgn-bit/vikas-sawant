@@ -120,7 +120,7 @@ export default function AdminShell({
 
   async function logout() {
     await fetch("/api/logout", { method: "POST" });
-    window.location.href = "/";
+    window.location.href = "/portal";
   }
 
   const term = q.trim().toLowerCase();

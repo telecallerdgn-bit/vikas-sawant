@@ -22,8 +22,12 @@ enum CourseMode {
   HYBRID
   STUDY_ONLY
   ONLINE_PRERECORDED
+  LIVE_ONLY
 }
-
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+}
 enum OrderStatus {
   PENDING
   PAID
@@ -147,20 +151,59 @@ model Course {
   orders    Order[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+    slug        String?  @unique
+  summary     String?  @db.VarChar(300)
+  description String?  @db.Text
+  coverImage  String?  @db.VarChar(500)
+  prices      CoursePrice[]
+  topics CourseTopic[]
+  categoryId  Int?
+  category    CourseCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  overview    String?         @db.Text
+  eligibility String?         @db.Text
+  keyBenefits String?         @db.Text
+    offerPrice  Decimal?  @db.Decimal(10, 2)
+  offerLabel  String?   @db.VarChar(80)
+  offerEndsAt DateTime?
+
+  @@index([categoryId])
+  
 }
 
 model Student {
+  id           Int       @id @default(autoincrement())
+  name         String
+  mobile       String    @unique
+  email        String?
+  addressLine  String?
+  city         String?
+  pincode      String?
+  passwordHash String?
+  isActive     Boolean   @default(true)
+  referredAt   DateTime?
+  partnerId    Int?
+  partner      User?     @relation("PartnerStudents", fields: [partnerId], references: [id])
+  orders       Order[]
+  createdAt    DateTime  @default(now())
+}
+
+model StudentAdmin {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  passwordHash String
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model AuthAttempt {
   id          Int      @id @default(autoincrement())
-  name        String
-  mobile      String   @unique
-  email       String?
-  addressLine String?
-  city        String?
-  pincode     String?
-  partnerId   Int?
-  partner     User?    @relation("PartnerStudents", fields: [partnerId], references: [id])
-  orders      Order[]
-  createdAt   DateTime @default(now())
+  key         String   @unique
+  count       Int      @default(1)
+  windowStart DateTime @default(now())
+
+  @@index([windowStart])
 }
 
 model Order {
@@ -176,6 +219,7 @@ model Order {
   ledger    LedgerEntry[]
   shipment  Shipment?
   createdAt DateTime      @default(now())
+    mode CourseMode?
 }
 
 model LedgerEntry {
@@ -271,4 +315,78 @@ model AuditLog {
   action    String
   details   String?  @db.Text
   createdAt DateTime @default(now())
+}
+model CoursePrice {
+  id       Int        @id @default(autoincrement())
+  courseId Int
+  course   Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  mode     CourseMode
+  price    Decimal    @db.Decimal(10, 2)
+
+  @@unique([courseId, mode])
+}
+
+model BlogPost {
+  id          Int        @id @default(autoincrement())
+  title       String
+  slug        String     @unique
+  excerpt     String?    @db.VarChar(300)
+  content     String     @db.LongText
+  coverImage  String?    @db.VarChar(500)
+  status      BlogStatus @default(DRAFT)
+  publishedAt DateTime?
+  authorName  String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([status, publishedAt])
+}
+
+enum LessonType {
+  VIDEO
+  TEXT
+  LIVE
+}
+
+model CourseTopic {
+  id        Int      @id @default(autoincrement())
+  courseId  Int
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title     String   @db.VarChar(160)
+  summary   String?  @db.Text
+  position  Int      @default(0)
+  lessons   Lesson[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId, position])
+}
+
+model Lesson {
+  id           Int         @id @default(autoincrement())
+  topicId      Int
+  topic        CourseTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  title        String      @db.VarChar(160)
+  type         LessonType  @default(VIDEO)
+  content      String?     @db.Text
+  videoUrl     String?     @db.VarChar(500)
+  liveUrl      String?     @db.VarChar(500)
+  liveStartsAt DateTime?
+  durationMin  Int?
+  isPreview    Boolean     @default(false)
+  isPublished  Boolean     @default(true)
+  position     Int         @default(0)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@index([topicId, position])
+}
+model CourseCategory {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique @db.VarChar(120)
+  slug      String   @unique @db.VarChar(140)
+  position  Int      @default(0)
+  courses   Course[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

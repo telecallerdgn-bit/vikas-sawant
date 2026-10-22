@@ -1,30 +1,44 @@
 import { Suspense } from "react";
-import { getSession } from "@/lib/session";
-import LogoutButton from "@/components/LogoutButton";
-import PackingBoard from "@/components/PackingBoard";
+import GroupView from "@/components/packing/GroupView";
+import PageHeader from "@/components/ui/PageHeader";
+import StatCards, { type Stat } from "@/components/ui/StatCards";
+import { CardsSkeleton } from "@/components/ui/Skeletons";
+import { getCounts, requirePacking } from "@/lib/packing";
+import { PACKING_BASE } from "@/lib/routes";
 
-async function Welcome() {
-  const session = await getSession();
-  return <p className="mt-1 text-sm text-gray-500">Welcome, {session?.name}</p>;
+type SearchParams = Promise<{ page?: string }>;
+
+async function Summary() {
+  await requirePacking();
+  const c = await getCounts();
+  const stats: Stat[] = [
+    { label: "Awaiting packing", value: String(c.queue), hint: "Weigh and pack these", icon: "package", tone: "orange" },
+    { label: "Packed", value: String(c.packed), hint: "Ready for a courier", icon: "check", tone: "blue" },
+    { label: "Needs attention", value: String(c.exceptions), hint: "Failed or returned", icon: "alert", tone: "rose" },
+  ];
+  return <StatCards items={stats} cols={3} />;
 }
 
-export default function PackingPage() {
+export default function PackingQueuePage({ searchParams }: { searchParams: SearchParams }) {
   return (
-    <main className="mx-auto max-w-6xl space-y-6 p-6">
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-gray-500">Dispatch desk</p>
-          <h1 className="text-2xl font-semibold">Packing Department</h1>
-          <Suspense fallback={null}>
-            <Welcome />
-          </Suspense>
-        </div>
-        <LogoutButton />
-      </div>
-
-      <Suspense fallback={<p className="text-sm text-gray-400">Loading...</p>}>
-        <PackingBoard />
+    <div className="space-y-6">
+      <PageHeader
+        eyebrow="Packing department"
+        title="Packing Queue"
+        description="Only paid orders that include printed books appear here. You see delivery details only, no payment or commission data."
+      />
+      <Suspense fallback={<CardsSkeleton count={3} />}>
+        <Summary />
       </Suspense>
-    </main>
+      <Suspense fallback={<div className="h-64 animate-pulse rounded-2xl border border-slate-200 bg-white" />}>
+        <GroupView
+          group="queue"
+          basePath={PACKING_BASE}
+          searchParams={searchParams}
+          emptyTitle="Nothing to pack right now"
+          emptyHint="New paid orders with books will appear here."
+        />
+      </Suspense>
+    </div>
   );
 }

@@ -20,7 +20,7 @@ export function parsePage(v?: string) {
 export async function requirePartner() {
   const session = await getSession();
   if (!session) redirect("/login?role=partner");
-  if (session.role !== "PARTNER") redirect("/");
+  if (session.role !== "PARTNER") redirect("/portal");
   return { id: session.userId };
 }
 

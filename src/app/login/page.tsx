@@ -26,7 +26,7 @@ function LoginForm() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!validRole) router.replace("/");
+    if (!validRole) router.replace("/portals");
   }, [validRole, router]);
 
   async function onSubmit(e: React.FormEvent) {
@@ -87,7 +87,7 @@ function LoginForm() {
           {loading ? "Please wait..." : "Login"}
         </button>
 
-        <a href="/" className="block text-center text-sm text-gray-500">
+        <a href="/portal" className="block text-center text-sm text-gray-500">
           Change role
         </a>
       </form>
