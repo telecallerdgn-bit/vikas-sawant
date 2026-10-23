@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { slugify } from "@/lib/catalog";
 import { FIELD, LABEL, PRIMARY_BTN } from "@/components/studentadmin/ui";
 import ImageUpload from "@/components/studentadmin/ImageUpload";
@@ -25,6 +25,20 @@ export default function BlogForm({ initial }: { initial: BlogInitial }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // A new post form must always open empty. Next.js keeps a page you left in memory,
+  // so the form is cleared when it is hidden and again after a successful save.
+  function resetNewForm() {
+    setF(initial);
+    setSlugTouched(false);
+    setError("");
+  }
+
+  useEffect(() => {
+    if (editing) return;
+    return () => resetNewForm();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
@@ -40,6 +54,7 @@ export default function BlogForm({ initial }: { initial: BlogInitial }) {
         setError(data.error ?? "Something went wrong");
         return;
       }
+      if (!editing) resetNewForm();
       router.push("/student-admin/blog");
       router.refresh();
     } catch {

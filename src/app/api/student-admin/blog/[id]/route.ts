@@ -1,24 +1,26 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { blogSchema } from "@/lib/content-schema";
-import { audit, studentAdminOrNull } from "@/lib/sadmin-api";
+import { getSadminForApi } from "@/lib/sadmin-api";
 import { refreshBlog } from "@/lib/revalidate";
 
 async function context(params: Promise<{ id: string }>) {
-  const admin = await studentAdminOrNull();
-  if (!admin) return { error: NextResponse.json({ error: "Not allowed" }, { status: 403 }) } as const;
+  const admin = await getSadminForApi();
+  if (!admin || !admin.isActive) {
+    return { error: NextResponse.json({ error: "Not allowed" }, { status: 403 }) } as const;
+  }
 
   const id = Number((await params).id);
   if (!Number.isInteger(id)) {
     return { error: NextResponse.json({ error: "Invalid id" }, { status: 400 }) } as const;
   }
-  return { admin, id } as const;
+  return { id } as const;
 }
 
 export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const ctx = await context(params);
   if ("error" in ctx) return ctx.error;
-  const { admin, id } = ctx;
+  const { id } = ctx;
 
   const parsed = blogSchema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) {
@@ -54,7 +56,6 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
     throw e;
   }
 
-  await audit(admin, "Blog post updated", `#${id} ${d.title} (${d.status})`);
   refreshBlog();
   return NextResponse.json({ ok: true });
 }
@@ -62,13 +63,12 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
 export async function DELETE(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const ctx = await context(params);
   if ("error" in ctx) return ctx.error;
-  const { admin, id } = ctx;
+  const { id } = ctx;
 
   const post = await prisma.blogPost.findUnique({ where: { id }, select: { title: true } });
   if (!post) return NextResponse.json({ error: "Post not found" }, { status: 404 });
 
   await prisma.blogPost.delete({ where: { id } });
-  await audit(admin, "Blog post deleted", `#${id} ${post.title}`);
   refreshBlog();
   return NextResponse.json({ ok: true });
 }

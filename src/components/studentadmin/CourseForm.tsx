@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { MODES, slugify } from "@/lib/catalog";
 import { FIELD, LABEL, PRIMARY_BTN } from "@/components/studentadmin/ui";
 import ImageUpload from "@/components/studentadmin/ImageUpload";
@@ -73,6 +73,23 @@ export default function CourseForm({
 
   const hadManyModes = editing && initialModes.length > 1;
 
+  // A new course form must always open empty. Next.js keeps a page you left in memory,
+  // so the form is cleared when it is hidden and again after a successful save.
+  function resetNewForm() {
+    setF(initial);
+    setMode("");
+    setSlugTouched(false);
+    setError("");
+    setNewCat("");
+    setCatError("");
+  }
+
+  useEffect(() => {
+    if (editing) return;
+    return () => resetNewForm();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   function setName(v: string) {
     setF((p) => ({ ...p, name: v, slug: slugTouched ? p.slug : slugify(v) }));
   }
@@ -105,6 +122,41 @@ export default function CourseForm({
       setCats((p) => [...p, created]);
       setF((p) => ({ ...p, categoryId: created.id }));
       setNewCat("");
+    } catch {
+      setCatError("Network error. Please try again.");
+    } finally {
+      setCatBusy(false);
+    }
+  }
+
+  async function removeCategory() {
+    if (f.categoryId === null) return;
+    const deletedId = f.categoryId;
+    const target = cats.find((c) => c.id === deletedId);
+    if (
+      !confirm(
+        `Delete the category "${target?.name}"? Its courses will stay on the website but will have no category.`
+      )
+    ) {
+      return;
+    }
+    setCatError("");
+    setCatBusy(true);
+    try {
+      const res = await fetch(`/api/student-admin/course-categories/${deletedId}`, { method: "DELETE" });
+      if (!res.ok) {
+        let data: { error?: string } | null = null;
+        try {
+          data = await res.json();
+        } catch {
+          // The response was not JSON.
+        }
+        setCatError(data?.error ?? "Could not delete the category");
+        return;
+      }
+      setCats((p) => p.filter((c) => c.id !== deletedId));
+      setF((p) => ({ ...p, categoryId: null }));
+      router.refresh();
     } catch {
       setCatError("Network error. Please try again.");
     } finally {
@@ -188,6 +240,7 @@ export default function CourseForm({
         setError(data?.error ?? "Something went wrong");
         return;
       }
+      if (!editing) resetNewForm();
       router.push("/student-admin/courses");
       router.refresh();
     } catch {
@@ -357,6 +410,17 @@ export default function CourseForm({
                 </option>
               ))}
             </select>
+
+            {f.categoryId !== null && (
+              <button
+                type="button"
+                disabled={catBusy}
+                onClick={removeCategory}
+                className="mt-2 text-xs font-medium text-red-600 hover:underline disabled:opacity-50"
+              >
+                Delete this category
+              </button>
+            )}
 
             <div className="mt-3 flex gap-2">
               <input

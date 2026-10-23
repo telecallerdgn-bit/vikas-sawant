@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { blogSchema } from "@/lib/content-schema";
-import { audit, studentAdminOrNull } from "@/lib/sadmin-api";
+import { getSadminForApi } from "@/lib/sadmin-api";
 import { refreshBlog } from "@/lib/revalidate";
 
 export async function POST(req: Request) {
-  const admin = await studentAdminOrNull();
-  if (!admin) return NextResponse.json({ error: "Not allowed" }, { status: 403 });
+  const admin = await getSadminForApi();
+  if (!admin || !admin.isActive) return NextResponse.json({ error: "Not allowed" }, { status: 403 });
 
   const parsed = blogSchema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) {
@@ -33,7 +33,6 @@ export async function POST(req: Request) {
       select: { id: true },
     });
 
-    await audit(admin, "Blog post created", `#${post.id} ${d.title} (${d.status})`);
     refreshBlog();
     return NextResponse.json({ id: post.id }, { status: 201 });
   } catch (e) {
