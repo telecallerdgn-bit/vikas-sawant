@@ -9,7 +9,7 @@ import CourseCard from "@/components/site/CourseCard";
 import CourseFilters from "@/components/site/CourseFilters";
 import CoursesDecor from "@/components/site/CoursesDecor";
 import Reveal from "@/components/site/Reveal";
-import { CardsSkeleton, EmptyNote } from "@/components/site/ui";
+import { CardsSkeleton, EmptyNote, Wave } from "@/components/site/ui";
 
 export const metadata = { title: `Courses | ${SITE.brand}` };
 
@@ -125,26 +125,38 @@ const HIGHLIGHTS = [
 export default function CoursesPage({ searchParams }: { searchParams: SearchParams }) {
   return (
     <main className="bg-white">
-      {/* Header */}
-      <header className="relative overflow-hidden bg-gradient-to-b from-[#EEF3FB] to-white">
+      {/* Header: same dark blue gradient as the footer call-to-action band */}
+      <header className="relative overflow-hidden bg-gradient-to-br from-brand-950 via-brand-900 to-brand-700 text-white">
+        {/* soft glows */}
+        <div aria-hidden className="pointer-events-none absolute -left-24 -top-28 h-80 w-80 rounded-full bg-gold-400/20 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -bottom-40 right-16 h-96 w-96 rounded-full bg-gold-400/15 blur-3xl" />
+
         <CoursesDecor />
-        <div className="relative z-10 mx-auto max-w-6xl px-4 pb-14 pt-12 text-center md:pt-16">
+
+        <div className="relative z-10 mx-auto max-w-6xl px-4 pb-24 pt-12 text-center md:pb-28 md:pt-16">
           <Reveal>
-            <nav aria-label="Breadcrumb" className="mb-6 flex items-center justify-center gap-1.5 text-xs font-semibold text-slate-500">
-              <Link href="/" className="transition hover:text-brand-900">
+            <nav
+              aria-label="Breadcrumb"
+              className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-2 text-xs font-semibold text-white ring-1 ring-white/25 backdrop-blur"
+            >
+              <Link href="/" className="text-white/80 transition hover:text-gold-300">
                 Home
               </Link>
-              <ChevronRight className="h-3.5 w-3.5" />
-              <span className="text-brand-900">Courses</span>
+              <ChevronRight className="h-3.5 w-3.5 text-gold-400" />
+              <span aria-current="page" className="font-bold text-gold-400">
+                Courses
+              </span>
             </nav>
 
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-1.5 text-sm font-semibold text-brand-800">
-              <GraduationCap className="h-4 w-4" /> Learn online
-            </span>
-            <h1 className="mt-5 text-4xl font-black text-brand-900 md:text-5xl">All courses</h1>
-            <p className="mx-auto mt-3 max-w-2xl text-slate-600">
-              Pick a category, then open a course to see its modes and prices.
-            </p>
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white">
+                <GraduationCap className="h-4 w-4 text-gold-400" /> Learn online
+              </span>
+              <h1 className="mt-5 text-4xl font-black text-white md:text-5xl">All courses</h1>
+              <p className="mx-auto mt-3 max-w-2xl text-slate-200">
+                Pick a category, then open a course to see its modes and prices.
+              </p>
+            </div>
           </Reveal>
 
           <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -163,6 +175,9 @@ export default function CoursesPage({ searchParams }: { searchParams: SearchPara
             })}
           </div>
         </div>
+
+        {/* wave into the white page below */}
+        <Wave className="absolute inset-x-0 bottom-0 text-white" />
       </header>
 
       {/* Filters + courses */}
