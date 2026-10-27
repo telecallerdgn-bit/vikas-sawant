@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 import { FIELD, LABEL, PRIMARY_BTN } from "@/components/studentadmin/ui";
+import LessonFiles from "@/components/studentadmin/LessonFiles";
 import type { LessonDTO, LessonType } from "@/lib/curriculum";
 import { PROVIDER_LABEL, parseVideo } from "@/lib/video";
 
@@ -69,7 +70,6 @@ export default function LessonForm({
     if (type === "LIVE" && !/^https:\/\//i.test(liveUrl.trim())) {
       return setError("Enter the live class link (https)");
     }
-    if (type === "TEXT" && !content.trim()) return setError("Write the lesson text");
 
     let startsIso: string | null = null;
     if (type === "LIVE") {
@@ -191,7 +191,7 @@ export default function LessonForm({
 
       <div>
         <label htmlFor={id("content")} className={LABEL}>
-          {type === "TEXT" ? "Lesson text" : "Notes (optional)"}
+          {type === "TEXT" ? "Lesson text (optional if you attach a file)" : "Notes (optional)"}
         </label>
         <textarea
           id={id("content")}
@@ -203,6 +203,15 @@ export default function LessonForm({
         />
         <p className="mt-1 text-xs text-slate-500">Markdown works: # heading, **bold**, - list</p>
       </div>
+
+      {type === "TEXT" &&
+        (initial?.id !== undefined ? (
+          <LessonFiles lessonId={initial.id} />
+        ) : (
+          <p className="rounded-xl border border-dashed border-slate-300 bg-white p-3 text-xs text-slate-500">
+            To attach a PDF or file, save this lesson first, then open it with the edit (pencil) button.
+          </p>
+        ))}
 
       <div className="grid gap-4 sm:grid-cols-[160px_1fr]">
         <div>

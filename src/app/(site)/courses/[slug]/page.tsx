@@ -129,16 +129,23 @@ async function View({ params }: { params: Promise<{ slug: string }> }) {
               })}
             </ul>
 
-            <Link
-              href="/student/register"
-              className="mt-5 block rounded-full bg-gold-400 py-3.5 text-center font-bold text-brand-900 shadow-lg shadow-gold-500/30 hover:bg-gold-300"
-            >
-              Create account to enrol
-            </Link>
-            <p className="mt-3 flex items-start gap-2 text-xs text-slate-500">
-              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
-              Secure online payment is being set up. Create your account now to get started.
-            </p>
+                     <Link
+            href={`/student/enroll/${slug}`}
+            className="mt-5 block rounded-full bg-orange-500 py-3.5 text-center font-bold text-white shadow-lg shadow-orange-500/30 hover:bg-orange-600"
+          >
+            Enroll now
+          </Link>
+          <p className="mt-3 text-center text-xs text-slate-500">
+            New student?{" "}
+            <Link href="/student/register" className="font-semibold text-orange-600 hover:underline">
+              Create your account
+            </Link>{" "}
+            first, then enroll.
+          </p>
+          <p className="mt-3 flex items-start gap-2 text-xs text-slate-500">
+            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
+            After you enroll, our team confirms your payment and opens the course in your account.
+          </p>
           </aside>
         </div>
       </div>

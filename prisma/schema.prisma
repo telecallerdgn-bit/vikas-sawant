@@ -378,7 +378,7 @@ model Lesson {
   position     Int         @default(0)
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-
+  files        LessonFile[]
   @@index([topicId, position])
 }
 model CourseCategory {
@@ -389,4 +389,64 @@ model CourseCategory {
   courses   Course[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  mobile    String?
+  topic     String
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+model LessonFile {
+  id        Int      @id @default(autoincrement())
+  lessonId  Int
+  lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  name      String   @db.VarChar(200)
+  storedAs  String   @db.VarChar(80)
+  mimeType  String   @db.VarChar(120)
+  sizeBytes Int
+  createdAt DateTime @default(now())
+
+  @@index([lessonId])
+}
+
+enum SubSuperBase {
+  REMAINDER
+  DISTRIBUTABLE
+}
+
+enum InactiveRule {
+  SKIP_TO_SUPER_ADMIN
+  COMPRESS
+}
+
+enum GatewayMode {
+  DEDUCT_FIRST
+  SUPER_ADMIN_BEARS
+}
+
+model CommissionRuleVersion {
+  id                Int          @id @default(autoincrement())
+  version           Int          @unique
+  level1Percent     Decimal      @db.Decimal(5, 2)
+  level2Percent     Decimal      @db.Decimal(5, 2)
+  level3Percent     Decimal      @db.Decimal(5, 2)
+  level4Percent     Decimal      @db.Decimal(5, 2)
+  level5Percent     Decimal      @db.Decimal(5, 2)
+  districtPercent   Decimal      @db.Decimal(5, 2)
+  subSuperPercent   Decimal      @db.Decimal(5, 2)
+  subSuperBase      SubSuperBase @default(REMAINDER)
+  inactiveRule      InactiveRule @default(SKIP_TO_SUPER_ADMIN)
+  gatewayMode       GatewayMode  @default(DEDUCT_FIRST)
+  gstPercent        Decimal      @default(18) @db.Decimal(5, 2)
+  gatewayFeePercent Decimal      @default(2) @db.Decimal(5, 2)
+  note              String?      @db.VarChar(200)
+  createdById       Int?
+  createdAt         DateTime     @default(now())
+  approvedById      Int?
+  approvedAt        DateTime?
 }

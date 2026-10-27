@@ -67,11 +67,11 @@ function pickLabel(obj: unknown, keys: string[], fallback = "-"): string {
 
 function shipmentStyle(status: string) {
   const s = status.toUpperCase();
-  if (s.includes("DELIVER")) return "bg-emerald-50 text-emerald-700 ring-emerald-200";
-  if (s.includes("SHIP") || s.includes("TRANSIT") || s.includes("DISPATCH"))
-    return "bg-blue-50 text-blue-700 ring-blue-200";
   if (s.includes("FAIL") || s.includes("RETURN") || s.includes("CANCEL"))
     return "bg-red-50 text-red-700 ring-red-200";
+  if (s === "DELIVERED") return "bg-emerald-50 text-emerald-700 ring-emerald-200";
+  if (s.includes("SHIP") || s.includes("TRANSIT") || s.includes("DISPATCH") || s.includes("OUT FOR"))
+    return "bg-blue-50 text-blue-700 ring-blue-200";
   return "bg-slate-100 text-slate-600 ring-slate-200";
 }
 

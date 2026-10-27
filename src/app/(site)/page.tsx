@@ -1,16 +1,20 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
+  BadgeCheck,
   BookOpen,
+  GraduationCap,
   Handshake,
   Layers,
+  Newspaper,
   PlayCircle,
   Radio,
+  Share2,
   UserPlus,
   Video,
-  GraduationCap,
   ListChecks,
 } from "lucide-react";
 import type { CourseMode } from "@prisma/client";
@@ -20,7 +24,14 @@ import { getActiveCourses, getCourseCategories, getPublishedPosts } from "@/lib/
 import CourseCard from "@/components/site/CourseCard";
 import BlogCard from "@/components/site/BlogCard";
 import CategoryStrip from "@/components/site/CategoryStrip";
-import { CardsSkeleton, EmptyNote, SectionHead, Wave } from "@/components/site/ui";
+import HeroSlider from "@/components/site/HeroSlider";
+import About from "@/components/site/About";
+import Reveal from "@/components/site/Reveal";
+import Float from "@/components/site/Float";
+import ModesDecor from "@/components/site/ModesDecor";
+import CoursesDecor from "@/components/site/CoursesDecor";
+import DistrictExplorer from "@/components/site/DistrictExplorer";
+import { CardsSkeleton, EmptyNote, Wave } from "@/components/site/ui";
 
 export const metadata = { title: `${SITE.brand} | ${SITE.tagline}` };
 
@@ -32,103 +43,55 @@ const MODE_ICON: Record<CourseMode, LucideIcon> = {
   LIVE_ONLY: Radio,
 };
 
-function HeroArt() {
-  const tiles = [
-    { icon: Video, title: "Live classes", text: "Learn with a teacher, live", cls: "left-0 top-6 -rotate-3" },
-    { icon: BookOpen, title: "Study material", text: "Books sent to your home", cls: "right-0 top-28 rotate-2" },
-    { icon: PlayCircle, title: "Recorded lessons", text: "Watch any time", cls: "bottom-4 left-8 rotate-1" },
-  ];
-
-  return (
-    <div className="relative mx-auto hidden h-[26rem] w-full max-w-md md:block">
-      {/* Gold plate: dark navy background par saaf dikhta hai */}
-      <div className="absolute inset-8 rounded-[3rem] bg-gradient-to-br from-gold-300 to-gold-500" />
-      <div className="absolute left-1/2 top-1/2 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-brand-900 shadow-2xl">
-        <GraduationCap className="h-14 w-14" />
-      </div>
-      {tiles.map((t) => {
-        const Icon = t.icon;
-        return (
-          <div
-            key={t.title}
-            className={`absolute flex items-center gap-3 rounded-2xl bg-white p-3 pr-5 text-slate-800 shadow-xl ${t.cls}`}
-          >
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
-              <Icon className="h-5 w-5" />
-            </span>
-            <span>
-              <span className="block text-sm font-bold text-brand-900">{t.title}</span>
-              <span className="block text-xs text-slate-500">{t.text}</span>
-            </span>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-brand-900 text-white">
-      <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-gold-400/15 blur-3xl" />
-      <div className="absolute -bottom-32 right-0 h-96 w-96 rounded-full bg-brand-500/30 blur-3xl" />
-
-      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 pb-28 pt-16 md:grid-cols-2 md:pt-24">
-        <div>
-          <p className="text-sm font-bold uppercase tracking-widest text-gold-300">{SITE.hero.eyebrow}</p>
-          <h1 className="mt-3 text-4xl font-black leading-tight md:text-6xl">
-            {SITE.hero.title} <span className="italic text-gold-400">{SITE.hero.accent}</span>
-          </h1>
-          <p className="mt-5 max-w-lg text-lg text-brand-100">{SITE.hero.text}</p>
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/courses"
-              className="inline-flex items-center gap-2 rounded-full bg-gold-400 px-7 py-3.5 font-bold text-brand-900 shadow-lg shadow-gold-500/30 hover:bg-gold-300"
-            >
-              Explore courses <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              href="/student/register"
-              className="rounded-full border-2 border-white/30 px-7 py-3.5 font-bold text-white hover:bg-white/10"
-            >
-              Create account
-            </Link>
-          </div>
-        </div>
-
-        <HeroArt />
-      </div>
-
-      <Wave className="absolute inset-x-0 bottom-0 text-brand-50" />
-    </section>
+    <div className="relative">
+      <HeroSlider slides={SITE.hero.slides} />
+      <Wave className="absolute inset-x-0 bottom-0 z-20 text-brand-50" />
+    </div>
   );
 }
 
 function Modes() {
   return (
-    // Section ka background wave ke rang (brand-50) jaisa hi hai, taaki jod saaf dikhe
-    <section className="bg-brand-50">
-      <div className="mx-auto max-w-6xl px-4 py-16">
-        <SectionHead
-          eyebrow="Learn your way"
-          title="Pick the mode that fits you"
-          text="The same course, offered in different ways. Choose what matches your time and budget."
-        />
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-          {MODES.map((m) => {
+    <section className="relative overflow-hidden bg-brand-50/50">
+      <ModesDecor />
+      <div className="relative z-10 mx-auto max-w-6xl px-4 pb-32 pt-20 md:pb-40">
+        <Reveal>
+          <div className="text-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-1.5 text-sm font-semibold text-brand-800">
+              <Layers className="h-4 w-4" /> Learn your way
+            </span>
+            <h2 className="mt-5 text-3xl font-black text-brand-900 md:text-4xl">Pick the mode that fits you</h2>
+            <p className="mx-auto mt-3 max-w-2xl text-slate-600">
+              The same course, offered in different ways. Choose what matches your time and budget.
+            </p>
+          </div>
+        </Reveal>
+        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          {MODES.map((m, i) => {
             const Icon = MODE_ICON[m.value];
             return (
-              <div
+              <Reveal
                 key={m.value}
-                className="rounded-3xl border border-brand-100 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                variant="zoom"
+                delay={i * 90}
+                className={`h-full ${i % 2 ? "lg:mt-10" : ""}`}
               >
-                <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
-                  <Icon className="h-7 w-7" />
-                </span>
-                <h3 className="mt-4 font-bold text-brand-900">{m.label}</h3>
-                <p className="mt-1 text-sm text-slate-500">{m.hint}</p>
-              </div>
+                <div className="group relative h-full overflow-hidden rounded-3xl border border-brand-100 bg-white p-6 pb-7 text-center shadow-sm transition duration-300 hover:-translate-y-2 hover:border-gold-400 hover:shadow-xl">
+                  {/* Bada halka icon card ke peeche */}
+                  <Icon className="absolute -bottom-5 -right-5 h-24 w-24 text-brand-50 transition duration-300 group-hover:rotate-12 group-hover:scale-110 group-hover:text-gold-400/20" />
+
+                  <span className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-50 text-brand-700 ring-4 ring-brand-50/60 transition duration-300 group-hover:bg-brand-900 group-hover:text-gold-400 group-hover:ring-gold-400/30">
+                    <Icon className="h-7 w-7" />
+                  </span>
+                  <h3 className="relative mt-5 font-bold text-brand-900">{m.label}</h3>
+                  <p className="relative mt-1 text-sm text-slate-500">{m.hint}</p>
+
+                  {/* Hover par neeche gold line */}
+                  <span className="absolute bottom-0 left-1/2 h-1 w-0 -translate-x-1/2 rounded-full bg-gold-400 transition-all duration-300 group-hover:w-2/3" />
+                </div>
+              </Reveal>
             );
           })}
         </div>
@@ -143,33 +106,44 @@ async function Categories() {
 }
 
 async function Courses() {
-  const courses = await getActiveCourses(6);
+  const courses = await getActiveCourses(3);
   return (
-    <section className="bg-white py-16">
-      <div className="mx-auto max-w-6xl px-4">
-        <SectionHead eyebrow="Learn online" title="Our courses" text="Find a course and see every mode and price." />
+    <section className="relative overflow-hidden bg-gradient-to-b from-white via-brand-50/60 to-white py-20">
+      <CoursesDecor />
+      <div className="relative z-10 mx-auto max-w-6xl px-4">
+        <Reveal>
+          <div className="text-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-1.5 text-sm font-semibold text-brand-800">
+              <GraduationCap className="h-4 w-4" /> Learn online
+            </span>
+            <h2 className="mt-5 text-3xl font-black text-brand-900 md:text-4xl">Our courses</h2>
+            <p className="mx-auto mt-3 max-w-2xl text-slate-600">Find a course and see every mode and price.</p>
+          </div>
+        </Reveal>
 
-        <div className="mt-10">
+        <div className="mt-12">
           {courses.length === 0 ? (
             <EmptyNote title="Courses are coming soon." text="Please check back shortly." />
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {courses.map((c) => (
-                <CourseCard key={c.id} course={c} />
+              {courses.map((c, i) => (
+                <Reveal key={c.id} delay={(i % 3) * 110} className="h-full">
+                  <CourseCard course={c} />
+                </Reveal>
               ))}
             </div>
           )}
         </div>
 
         {courses.length > 0 && (
-          <div className="mt-10 text-center">
+          <Reveal className="mt-12 text-center">
             <Link
               href="/courses"
-              className="inline-flex items-center gap-2 rounded-full bg-brand-900 px-7 py-3 font-bold text-white hover:bg-brand-800"
+              className="transition active:scale-95 inline-flex items-center gap-2 rounded-full bg-brand-900 px-7 py-3 font-bold text-white hover:bg-brand-800"
             >
               View all courses <ArrowRight className="h-4 w-4" />
             </Link>
-          </div>
+          </Reveal>
         )}
       </div>
     </section>
@@ -182,55 +156,198 @@ function HowItWorks() {
     { icon: ListChecks, title: "Choose course and mode", text: "Pick a course and the mode that suits you." },
     { icon: BookOpen, title: "Start learning", text: "Books are delivered to your address for study material modes." },
   ];
+  const image = SITE.howItWorks.image;
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16">
-      <SectionHead eyebrow="Simple steps" title="How it works" />
-      <div className="mt-10 grid gap-6 md:grid-cols-3">
-        {steps.map((s, i) => {
-          const Icon = s.icon;
-          return (
-            <div key={s.title} className="relative rounded-3xl border border-brand-100 bg-white p-7 shadow-sm">
-              <span className="absolute -top-4 left-7 flex h-8 w-8 items-center justify-center rounded-full bg-gold-400 text-sm font-black text-brand-900">
-                {i + 1}
-              </span>
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-900 text-white">
-                <Icon className="h-6 w-6" />
-              </span>
-              <h3 className="mt-4 text-lg font-bold text-brand-900">{s.title}</h3>
-              <p className="mt-1 text-sm text-slate-600">{s.text}</p>
+    <section className="mx-auto max-w-6xl px-4 py-20">
+      <div className="grid items-center gap-14 md:grid-cols-2">
+        {/* Left: image */}
+        <Reveal variant="left">
+          <div className="relative mx-auto w-full max-w-md pb-6 pl-4 pr-6">
+            {/* Gold plate image ke peeche */}
+            <div className="absolute bottom-0 left-0 top-8 w-[85%] rounded-3xl bg-gold-400/30" />
+            <div className="absolute -right-0 top-0 h-24 w-24 rounded-full border-2 border-dashed border-brand-300" />
+
+            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-gradient-to-br from-brand-800 to-brand-900 shadow-xl">
+              {image ? (
+                <Image
+                  src={image}
+                  alt="Student learning online"
+                  fill
+                  sizes="(min-width: 768px) 28rem, 90vw"
+                  className="object-cover"
+                />
+              ) : (
+                <div className="flex h-full items-center justify-center text-gold-300">
+                  <GraduationCap className="h-24 w-24" />
+                </div>
+              )}
             </div>
-          );
-        })}
+
+            {/* Floating chip */}
+            <Float className="absolute -left-0 bottom-12 flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-2xl" duration={7}>
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gold-400 text-brand-900">
+                <ListChecks className="h-5 w-5" />
+              </span>
+              <div>
+                <p className="text-lg font-black leading-none text-brand-900">3 steps</p>
+                <p className="mt-1 text-xs text-slate-500">and you are in</p>
+              </div>
+            </Float>
+          </div>
+        </Reveal>
+
+        {/* Right: heading + step list */}
+        <div>
+          <Reveal variant="right">
+            <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-1.5 text-sm font-semibold text-brand-800">
+              <ListChecks className="h-4 w-4" /> Simple steps
+            </span>
+            <h2 className="mt-5 text-3xl font-black text-brand-900 md:text-4xl">How it works</h2>
+            <p className="mt-3 max-w-md text-slate-600">
+              From sign up to your first class, it takes just three easy steps.
+            </p>
+          </Reveal>
+
+          <div className="mt-10">
+            {steps.map((s, i) => {
+              const Icon = s.icon;
+              const last = i === steps.length - 1;
+              return (
+                <Reveal key={s.title} variant="right" delay={150 + i * 130}>
+                  <div className={`group relative flex gap-6 ${last ? "" : "pb-12"}`}>
+                    {/* Steps ko jodne wali dashed line */}
+                    {!last && (
+                      <span
+                        aria-hidden
+                        className="absolute bottom-2 left-8 top-[4.5rem] -ml-px border-l-2 border-dashed border-brand-300"
+                      />
+                    )}
+
+                    <span className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-brand-200 bg-white text-brand-900 shadow-md transition duration-300 group-hover:-translate-y-1 group-hover:border-gold-400 group-hover:bg-brand-900 group-hover:text-gold-400 group-hover:shadow-xl">
+                      <Icon className="h-7 w-7" />
+                      <span className="absolute -right-1.5 -top-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-gold-400 text-xs font-black text-brand-900 ring-4 ring-white">
+                        {i + 1}
+                      </span>
+                    </span>
+
+                    <div className="pt-1">
+                      <p className="text-xs font-bold uppercase tracking-widest text-gold-600">Step {i + 1}</p>
+                      <h3 className="mt-1 text-xl font-black text-brand-900">{s.title}</h3>
+                      <p className="mt-1.5 max-w-sm text-base leading-relaxed text-slate-600">{s.text}</p>
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+
+          <Reveal delay={550}>
+            <Link
+              href="/student/register"
+              className="mt-12 inline-flex items-center gap-2 rounded-full bg-brand-900 px-7 py-3.5 font-bold text-white transition hover:bg-brand-800 active:scale-95"
+            >
+              Create account <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
 }
 
+function Districts() {
+  // Abhi list site-config.ts se aa rahi hai. DB se laani ho to yahan fetch karke pass kar do.
+  return <DistrictExplorer districts={SITE.districts} />;
+}
+
 function PartnerBand() {
+  const points = [
+    { icon: UserPlus, title: "Apply", text: "Send your application" },
+    { icon: BadgeCheck, title: "Get approved", text: "We review and approve you" },
+    { icon: Share2, title: "Share your link", text: "Earn on every enrolment" },
+  ];
+  const offsets = ["", "md:ml-10", "md:ml-20"];
+
   return (
-    <section className="mx-auto max-w-6xl px-4 pb-16">
-      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-brand-800 to-brand-900 px-8 py-12 text-white md:px-14">
-        <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-gold-400/15" />
-        <div className="absolute -bottom-16 right-24 h-40 w-40 rounded-full bg-white/5" />
-        <div className="relative flex flex-wrap items-center justify-between gap-6">
-          <div className="max-w-xl">
-            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/15">
-              <Handshake className="h-6 w-6" />
-            </span>
-            <h2 className="mt-4 text-3xl font-black">Become a partner</h2>
-            <p className="mt-2 text-brand-100">
-              Recommend courses to students and earn on every enrolment. Apply, get approved and start sharing your
-              own referral link.
-            </p>
+    <section className="bg-[#EEF3FB] px-4 py-16">
+      <div className="mx-auto max-w-6xl">
+        <Reveal variant="zoom">
+          <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-800 via-brand-900 to-brand-900 px-8 py-12 text-white md:px-14 md:py-16">
+            {/* Background vectors */}
+            <div aria-hidden className="pointer-events-none absolute inset-0">
+              <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-gold-400/15 blur-3xl" />
+              <div className="absolute -bottom-28 left-1/3 h-72 w-72 rounded-full bg-brand-500/30 blur-3xl" />
+              <svg className="absolute inset-0 h-full w-full text-white/10" fill="currentColor">
+                <defs>
+                  <pattern id="partner-dots" width="24" height="24" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1.3" />
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#partner-dots)" />
+              </svg>
+              <svg className="absolute -right-20 -top-16 h-[24rem] w-[24rem] text-white/15" viewBox="0 0 400 400" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <circle cx="200" cy="200" r="70" />
+                <circle cx="200" cy="200" r="125" />
+                <circle cx="200" cy="200" r="180" strokeDasharray="4 9" />
+                <circle cx="325" cy="200" r="7" fill="#fbbf24" stroke="none" />
+              </svg>
+              <svg className="absolute bottom-10 left-[46%] hidden h-5 w-5 text-gold-300/70 md:block" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 0C8 5 11 8 16 8C11 8 8 11 8 16C8 11 5 8 0 8C5 8 8 5 8 0Z" />
+              </svg>
+              <svg className="absolute right-[8%] top-10 hidden h-4 w-4 text-gold-300/70 md:block" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 0C8 5 11 8 16 8C11 8 8 11 8 16C8 11 5 8 0 8C5 8 8 5 8 0Z" />
+              </svg>
+            </div>
+
+            <div className="relative grid items-center gap-12 md:grid-cols-2 md:gap-14">
+              {/* Left: message + button */}
+              <div>
+                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gold-400 text-brand-900 shadow-lg shadow-gold-500/20">
+                  <Handshake className="h-7 w-7" />
+                </span>
+                <h2 className="mt-6 text-3xl font-black leading-tight md:text-4xl">Become a partner</h2>
+                <p className="mt-3 max-w-md text-brand-100">
+                  Recommend courses to students and earn on every enrolment. Apply, get approved and start sharing your
+                  own referral link.
+                </p>
+                <Link
+                  href="/partner-apply"
+                  className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold-400 px-7 py-3.5 font-bold text-brand-900 shadow-lg shadow-gold-500/20 transition hover:bg-gold-300 active:scale-95"
+                >
+                  Apply now <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+
+              {/* Right: 3 steps as glass chips */}
+              <div className="space-y-4">
+                {points.map((p, i) => {
+                  const Icon = p.icon;
+                  return (
+                    <Float
+                      key={p.title}
+                      delay={i * 0.6}
+                      duration={6}
+                      distance={6}
+                      className={`flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur ${offsets[i]}`}
+                    >
+                      <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gold-400 text-brand-900">
+                        <Icon className="h-6 w-6" />
+                        <span className="absolute -right-1.5 -top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-white text-xs font-black text-brand-900">
+                          {i + 1}
+                        </span>
+                      </span>
+                      <div>
+                        <p className="font-black">{p.title}</p>
+                        <p className="text-sm text-brand-100">{p.text}</p>
+                      </div>
+                    </Float>
+                  );
+                })}
+              </div>
+            </div>
           </div>
-          <Link
-            href="/partner-apply"
-            className="inline-flex items-center gap-2 rounded-full bg-gold-400 px-7 py-3.5 font-bold text-brand-900 shadow-lg hover:bg-gold-300"
-          >
-            Apply now <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -241,19 +358,34 @@ async function LatestPosts() {
   if (posts.length === 0) return null; // no posts yet, so the section stays hidden
 
   return (
-    <section className="bg-white py-16">
+    <section className="bg-white py-20">
       <div className="mx-auto max-w-6xl px-4">
-        <SectionHead eyebrow="Our blog" title="Recent articles" />
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((p) => (
-            <BlogCard key={p.id} post={p} />
+        <Reveal>
+          <div className="text-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-1.5 text-sm font-semibold text-brand-800">
+              <Newspaper className="h-4 w-4" /> Our blog
+            </span>
+            <h2 className="mt-5 text-3xl font-black text-brand-900 md:text-4xl">Recent articles</h2>
+            <p className="mx-auto mt-3 max-w-2xl text-slate-600">Read our latest articles and updates.</p>
+          </div>
+        </Reveal>
+
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((p, i) => (
+            <Reveal key={p.id} delay={(i % 3) * 110} className="h-full">
+              <BlogCard post={p} />
+            </Reveal>
           ))}
         </div>
-        <div className="mt-10 text-center">
-          <Link href="/blog" className="inline-flex items-center gap-2 font-bold text-brand-900 hover:text-brand-600">
+
+        <Reveal className="mt-12 text-center">
+          <Link
+            href="/blog"
+            className="transition active:scale-95 inline-flex items-center gap-2 rounded-full bg-brand-900 px-7 py-3 font-bold text-white hover:bg-brand-800"
+          >
             All articles <ArrowRight className="h-4 w-4" />
           </Link>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -263,6 +395,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <About />
       <Modes />
       <Suspense fallback={null}>
         <Categories />
@@ -277,6 +410,7 @@ export default function HomePage() {
         <Courses />
       </Suspense>
       <HowItWorks />
+      <Districts />
       <PartnerBand />
       <Suspense fallback={null}>
         <LatestPosts />

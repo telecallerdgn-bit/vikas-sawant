@@ -44,3 +44,23 @@ body {
   color: var(--foreground);
   font-family: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
 }
+/* Website colours from the logo: navy and gold. Only the public site uses this class. */
+.site-theme {
+  --color-orange-50: #fff8e1;
+  --color-orange-100: #fdeeb8;
+  --color-orange-200: #fbe08a;
+  --color-orange-300: #fbd25a;
+  --color-orange-400: #f9c52e;
+  --color-orange-500: #f8b915;
+  --color-orange-600: #a66e00;
+  --color-orange-700: #855700;
+  --color-fuchsia-500: #1d4fa8;
+  --color-fuchsia-600: #16346b;
+  --color-amber-500: #f8b915;
+}
+.site-theme .bg-orange-500 { color: #0b2149; }
+.site-theme .hover\:bg-orange-600:hover { background-color: #e3a600; }
+.site-theme .text-orange-500 { color: #a66e00; }
+
+
+

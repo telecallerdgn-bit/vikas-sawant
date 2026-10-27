@@ -4,6 +4,7 @@ import type { OrderStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { requireStudentAdmin } from "@/lib/sadmin-auth";
 import { MODE_LABEL } from "@/lib/catalog";
+import OrderActions from "@/components/studentadmin/OrderActions";
 import {
   Avatar,
   Card,
@@ -69,7 +70,7 @@ async function View({ searchParams }: { searchParams: SearchParams }) {
 
       <Card title="Orders" badge={`${total} ${status ? "shown" : "total"}`}>
         {orders.length === 0 ? (
-          <Empty title="No orders found." text="Orders appear here as students buy courses." />
+          <Empty title="No orders found." text="Orders appear here as students enrol in courses." />
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
@@ -81,6 +82,7 @@ async function View({ searchParams }: { searchParams: SearchParams }) {
                   <th className={TH}>Partner</th>
                   <th className={`${TH} text-right`}>Amount</th>
                   <th className={TH}>Status</th>
+                  <th className={TH}>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -105,6 +107,7 @@ async function View({ searchParams }: { searchParams: SearchParams }) {
                     <td className="px-4 py-4">
                       <Pill cls={ORDER_PILL[o.status].cls}>{ORDER_PILL[o.status].label}</Pill>
                     </td>
+                    <td className="px-4 py-4">{o.status === "PENDING" ? <OrderActions orderId={o.id} /> : null}</td>
                   </tr>
                 ))}
               </tbody>
@@ -121,7 +124,10 @@ async function View({ searchParams }: { searchParams: SearchParams }) {
 export default function OrdersPage({ searchParams }: { searchParams: SearchParams }) {
   return (
     <div className="space-y-6">
-      <SAHeader title="Orders" subtitle="Every course purchase. Payment and refunds are added with checkout." />
+      <SAHeader
+        title="Orders"
+        subtitle="Every course enrolment. Mark an order as paid once you receive the payment."
+      />
       <Suspense fallback={<p className="text-sm text-slate-400">Loading...</p>}>
         <View searchParams={searchParams} />
       </Suspense>

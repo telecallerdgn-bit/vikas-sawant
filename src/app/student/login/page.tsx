@@ -2,10 +2,33 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import {
+  AlertCircle,
+  ArrowLeft,
+  ArrowRight,
+  BookOpen,
+  Eye,
+  EyeOff,
+  GraduationCap,
+  Loader2,
+  Lock,
+  PlayCircle,
+  Smartphone,
+  Truck,
+} from "lucide-react";
+import { SITE } from "@/lib/site-config";
+import AuthShell, { type AuthPerk } from "@/components/site/AuthShell";
+
+const PERKS: AuthPerk[] = [
+  { icon: PlayCircle, title: "Live and recorded classes", text: "Learn with a teacher or watch any time." },
+  { icon: BookOpen, title: "All your courses in one place", text: "Pick up exactly where you left off." },
+  { icon: Truck, title: "Study material at your door", text: "Books are delivered to your address." },
+];
 
 export default function StudentLoginPage() {
   const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -32,54 +55,125 @@ export default function StudentLoginPage() {
     }
   }
 
+  const inputCls =
+    "w-full rounded-xl border border-brand-100 bg-brand-50/60 py-3.5 pr-4 text-sm text-brand-900 outline-none transition placeholder:text-slate-400 focus:border-gold-400 focus:bg-white focus:ring-4 focus:ring-gold-400/20";
+
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-100 p-4 font-[family-name:var(--font-lato)]">
-      <form onSubmit={onSubmit} className="w-full max-w-sm space-y-4 rounded-2xl border border-white bg-white p-7 shadow-lg">
+    <AuthShell
+      badge="Student portal"
+      title={
+        <>
+          Your learning,
+          <br />
+          <span className="italic text-gold-400">right where you left it</span>
+        </>
+      }
+      text="Log in to continue your courses, classes and study material."
+      perks={PERKS}
+    >
+      <form
+        onSubmit={onSubmit}
+        className="space-y-5 rounded-3xl border border-white bg-white p-7 shadow-2xl shadow-brand-900/10 sm:p-9"
+      >
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">Student</p>
-          <h1 className="mt-1 text-2xl font-bold text-slate-900">Welcome back</h1>
-          <p className="mt-1 text-sm text-slate-500">Log in with your mobile number.</p>
+          <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-3.5 py-1 text-xs font-semibold text-brand-800">
+            <GraduationCap className="h-3.5 w-3.5" /> Student login
+          </span>
+          <h2 className="mt-4 text-3xl font-black text-brand-900">Welcome back</h2>
+          <p className="mt-1.5 text-sm text-slate-500">Log in with your mobile number.</p>
         </div>
 
-        <input
-          type="tel"
-          inputMode="numeric"
-          autoComplete="username"
-          placeholder="Mobile number (10 digits)"
-          value={mobile}
-          onChange={(e) => setMobile(e.target.value.replace(/\D/g, "").slice(0, 10))}
-          className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-blue-400"
-          required
-        />
-        <input
-          type="password"
-          autoComplete="current-password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-blue-400"
-          required
-        />
+        <div>
+          <label htmlFor="mobile" className="mb-1.5 block text-sm font-bold text-brand-900">
+            Mobile number
+          </label>
+          <div className="relative">
+            <Smartphone className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-600" />
+            <span className="pointer-events-none absolute left-12 top-1/2 -translate-y-1/2 border-r border-brand-200 pr-3 text-sm font-semibold text-brand-900">
+              +91
+            </span>
+            <input
+              id="mobile"
+              type="tel"
+              inputMode="numeric"
+              autoComplete="username"
+              placeholder="10 digit mobile number"
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value.replace(/\D/g, "").slice(0, 10))}
+              className={`${inputCls} pl-[6.25rem]`}
+              required
+            />
+          </div>
+        </div>
 
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        <div>
+          <label htmlFor="password" className="mb-1.5 block text-sm font-bold text-brand-900">
+            Password
+          </label>
+          <div className="relative">
+            <Lock className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-600" />
+            <input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              autoComplete="current-password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={`${inputCls} pl-12 pr-12`}
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((v) => !v)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-slate-500 transition hover:bg-brand-50 hover:text-brand-900"
+            >
+              {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+            </button>
+          </div>
+        </div>
+
+        {error && (
+          <div role="alert" className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+            <span>{error}</span>
+          </div>
+        )}
 
         <button
           disabled={loading}
-          className="w-full rounded-xl bg-blue-600 p-3 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+          className="group flex w-full items-center justify-center gap-2 rounded-xl bg-brand-900 px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-900/20 transition hover:bg-brand-800 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {loading ? "Please wait..." : "Log in"}
+          {loading ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" /> Please wait...
+            </>
+          ) : (
+            <>
+              Log in <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+            </>
+          )}
         </button>
 
-        <p className="text-center text-sm text-slate-600">
-          New here?{" "}
-          <Link href="/student/register" className="font-medium text-blue-600 hover:underline">
-            Create an account
-          </Link>
-        </p>
-        <Link href="/" className="block text-center text-xs text-slate-400 hover:text-slate-600">
-          Back to website
+        <div className="relative py-1 text-center">
+          <span className="absolute inset-x-0 top-1/2 border-t border-brand-100" />
+          <span className="relative bg-white px-3 text-xs text-slate-400">New to {SITE.brand}?</span>
+        </div>
+
+        <Link
+          href="/student/register"
+          className="flex w-full items-center justify-center rounded-xl border-2 border-gold-400 px-5 py-3 text-sm font-bold text-brand-900 transition hover:bg-gold-100/60 active:scale-[0.98]"
+        >
+          Create an account
+        </Link>
+
+        <Link
+          href="/"
+          className="flex items-center justify-center gap-1.5 text-xs font-semibold text-slate-400 transition hover:text-brand-900"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" /> Back to website
         </Link>
       </form>
-    </main>
+    </AuthShell>
   );
 }

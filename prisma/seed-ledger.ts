@@ -1,4 +1,4 @@
-import { PrismaClient, OrderStatus, CourseMode, PayoutStatus } from "@prisma/client";
+import { PrismaClient, OrderStatus, CourseMode, PayoutStatus, type Student } from "@prisma/client";
 
 const prisma = new PrismaClient();
 const DAY = 24 * 60 * 60 * 1000;
@@ -55,7 +55,7 @@ async function main() {
 
   // Students.
   const names = ["Aarav Sharma", "Diya Verma", "Kabir Singh", "Anaya Gupta", "Rohan Mehta"];
-  const students = [];
+  const students: Student[] = [];
   for (const [i, name] of names.entries()) {
     const mobile = `90000000${String(i + 1).padStart(2, "0")}`;
     students.push(
@@ -112,7 +112,8 @@ async function main() {
   for (const o of orders) {
     const c = commissionPaise(Number(o.amount), rule);
     if (c <= 0 || o.partnerId === null) continue;
-    entries.push({ orderId: o.id, userId: o.partnerId, type: "COMMISSION", amount: money(c), createdAt: o.createdAt });
+    // "PARTNER_COMMISSION" is the name that lib/finance.ts and the admin pages count
+    entries.push({ orderId: o.id, userId: o.partnerId, type: "PARTNER_COMMISSION", amount: money(c), createdAt: o.createdAt });
     if (o.status === OrderStatus.REFUNDED) {
       entries.push({
         orderId: o.id,

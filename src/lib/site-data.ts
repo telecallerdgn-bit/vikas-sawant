@@ -1,4 +1,4 @@
-import type { CourseMode } from "@prisma/client";
+import { CourseMode, type Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { effectivePrices } from "@/lib/catalog";
 
@@ -58,17 +58,40 @@ function toCard(c: CourseRow): CourseCardData {
   };
 }
 
+export type CourseFilter = {
+  /** A category link name (slug). Leave it out for every category. */
+  category?: string;
+  /** A delivery mode. Leave it out for every mode. */
+  mode?: string;
+};
+
+const MODE_VALUES = Object.values(CourseMode) as string[];
+
 /**
  * Active courses that have a link name. Courses without one cannot have a page yet.
- * `category` is a category link name (slug); leave it out to get every category.
+ * The third argument can be a category slug (old style) or { category, mode }.
  */
-export async function getActiveCourses(take: number, q?: string, category?: string) {
+export async function getActiveCourses(take: number, q?: string, filter?: string | CourseFilter) {
+  const f: CourseFilter = typeof filter === "string" ? { category: filter } : (filter ?? {});
+
+  const and: Prisma.CourseWhereInput[] = [];
+
+  if (q) {
+    and.push({ OR: [{ name: { contains: q } }, { summary: { contains: q } }] });
+  }
+
+  // A course has a mode if one of its price rows has it, or if it has no price rows and the course itself has it.
+  if (f.mode && MODE_VALUES.includes(f.mode)) {
+    const mode = f.mode as CourseMode;
+    and.push({ OR: [{ prices: { some: { mode } } }, { prices: { none: {} }, mode }] });
+  }
+
   const rows = await prisma.course.findMany({
     where: {
       isActive: true,
       slug: { not: null },
-      ...(q ? { name: { contains: q } } : {}),
-      ...(category ? { category: { slug: category } } : {}),
+      ...(f.category ? { category: { slug: f.category } } : {}),
+      ...(and.length > 0 ? { AND: and } : {}),
     },
     orderBy: { createdAt: "desc" },
     take,

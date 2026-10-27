@@ -2,8 +2,9 @@
 
 import { useMemo, useState } from "react";
 import type { LucideIcon } from "lucide-react";
-import { Coins, GraduationCap, Inbox, MapPin, Phone, Search, UserCheck, Users } from "lucide-react";
+import { Coins, GraduationCap, Inbox, Phone, Search, UserCheck, Users } from "lucide-react";
 import PartnerStatusButton from "@/components/PartnerStatusButton";
+import PartnerDistrictSelect from "@/components/PartnerDistrictSelect";
 import { DISPLAY } from "@/lib/ui";
 
 export type PartnerRow = {
@@ -12,6 +13,7 @@ export type PartnerRow = {
   mobile: string | null;
   referralCode: string | null;
   isActive: boolean;
+  districtId: number | null;
   district: string | null;
   parentName: string | null;
   parentCode: string | null;
@@ -19,6 +21,8 @@ export type PartnerRow = {
   students: number;
   earned: number;
 };
+
+export type DistrictOption = { id: number; name: string };
 
 type Filter = "all" | "active" | "suspended";
 
@@ -84,7 +88,13 @@ function StatCard({
   );
 }
 
-export default function PartnersView({ partners }: { partners: PartnerRow[] }) {
+export default function PartnersView({
+  partners,
+  districts,
+}: {
+  partners: PartnerRow[];
+  districts: DistrictOption[];
+}) {
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
 
@@ -157,14 +167,17 @@ export default function PartnersView({ partners }: { partners: PartnerRow[] }) {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search name, mobile, code or district"
+            aria-label="Search partners"
             className="w-full rounded-full border border-slate-200 bg-white py-2 pl-9 pr-3 text-sm outline-none focus:border-blue-400"
           />
         </div>
 
-        <div className="flex rounded-full border border-slate-200 bg-white p-1">
+        <div role="group" aria-label="Filter by status" className="flex rounded-full border border-slate-200 bg-white p-1">
           {tabs.map((t) => (
             <button
               key={t.key}
+              type="button"
+              aria-pressed={filter === t.key}
               onClick={() => setFilter(t.key)}
               className={`rounded-full px-4 py-1.5 text-sm transition ${
                 filter === t.key ? "bg-blue-600 font-medium text-white" : "text-slate-600 hover:bg-slate-50"
@@ -258,14 +271,13 @@ export default function PartnersView({ partners }: { partners: PartnerRow[] }) {
                     </td>
 
                     <td className="px-4 py-4">
-                      {p.district ? (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-xs text-slate-700">
-                          <MapPin className="h-3 w-3" />
-                          {p.district}
-                        </span>
-                      ) : (
-                        <span className="text-slate-400">—</span>
-                      )}
+                      <PartnerDistrictSelect
+                        key={`${p.id}-${p.districtId ?? "none"}`}
+                        partnerId={p.id}
+                        partnerName={p.name}
+                        currentId={p.districtId}
+                        districts={districts}
+                      />
                     </td>
 
                     <td className="px-4 py-4 text-right lining-nums">{p.referrals}</td>
