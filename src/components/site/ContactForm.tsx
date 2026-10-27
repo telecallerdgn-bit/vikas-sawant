@@ -1,15 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { CheckCircle2, Loader2, Send } from "lucide-react";
+import { useState, type ReactNode } from "react";
+import { AlertCircle, ArrowRight, CircleCheck, Loader2, Mail, MessageSquare, Smartphone, User } from "lucide-react";
 
 const TOPICS = ["Course enquiry", "Order or delivery help", "Become a partner", "Something else"] as const;
 const MAX = 1000;
 
 const field =
-  "w-full rounded-xl border bg-white px-3.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:ring-2";
-const ok = "border-slate-200 focus:border-brand-600 focus:ring-brand-600/15";
-const bad = "border-red-300 focus:border-red-500 focus:ring-red-500/15";
+  "w-full rounded-xl border bg-brand-50/60 text-sm text-brand-900 outline-none transition placeholder:text-slate-400 focus:bg-white focus:ring-4";
+const ok = "border-brand-100 focus:border-gold-400 focus:ring-gold-400/20";
+const bad = "border-red-300 focus:border-red-400 focus:ring-red-200";
+const iconCls = "pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-600";
 
 type Values = { name: string; email: string; mobile: string; topic: string; message: string; website: string };
 const EMPTY: Values = { name: "", email: "", mobile: "", topic: TOPICS[0], message: "", website: "" };
@@ -21,6 +22,37 @@ function check(v: Values) {
   if (v.mobile.trim() && !/^[6-9]\d{9}$/.test(v.mobile.trim())) e.mobile = "Enter a 10-digit mobile number";
   if (v.message.trim().length < 10) e.message = "Please write at least 10 characters";
   return e;
+}
+
+function Field({
+  id,
+  label,
+  optional,
+  error,
+  className = "",
+  children,
+}: {
+  id: string;
+  label: string;
+  optional?: boolean;
+  error?: string;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className={className}>
+      <label htmlFor={id} className="mb-1.5 flex items-center justify-between text-sm font-bold text-brand-900">
+        {label}
+        {optional && <span className="text-xs font-medium text-slate-400">Optional</span>}
+      </label>
+      {children}
+      {error && (
+        <p id={`${id}-error`} className="mt-1.5 text-xs font-semibold text-red-600">
+          {error}
+        </p>
+      )}
+    </div>
+  );
 }
 
 export default function ContactForm() {
@@ -63,18 +95,19 @@ export default function ContactForm() {
 
   if (status === "sent") {
     return (
-      <div role="status" className="flex flex-col items-center justify-center rounded-3xl border border-brand-100 bg-white p-10 text-center shadow-sm">
-        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-          <CheckCircle2 className="h-8 w-8" />
+      <div
+        role="status"
+        className="flex flex-col items-center justify-center rounded-3xl border border-white bg-white p-10 text-center shadow-2xl shadow-brand-900/10"
+      >
+        <span className="flex h-20 w-20 items-center justify-center rounded-full bg-gold-400 text-brand-900 ring-8 ring-gold-100">
+          <CircleCheck className="h-10 w-10" />
         </span>
-        <h2 className="mt-5 text-2xl font-black text-brand-900">Message sent</h2>
-        <p className="mt-2 max-w-sm text-slate-600">
-          Thank you for reaching out. Our team will get back to you soon.
-        </p>
+        <h2 className="mt-6 text-3xl font-black text-brand-900">Message sent</h2>
+        <p className="mt-3 max-w-sm text-slate-600">Thank you for reaching out. Our team will get back to you soon.</p>
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-6 rounded-full border border-brand-200 px-5 py-2.5 text-sm font-bold text-brand-800 hover:bg-brand-50"
+          className="mt-7 rounded-full border-2 border-gold-400 px-6 py-2.5 text-sm font-bold text-brand-900 transition hover:bg-gold-100/60 active:scale-95"
         >
           Send another message
         </button>
@@ -86,79 +119,127 @@ export default function ContactForm() {
     <form
       onSubmit={submit}
       noValidate
-      className="rounded-3xl border border-brand-100 bg-white p-6 shadow-sm md:p-8"
+      className="relative space-y-5 overflow-hidden rounded-3xl border border-white bg-white p-6 shadow-2xl shadow-brand-900/10 md:p-9"
     >
-      <h2 className="text-2xl font-black text-brand-900">Send us a message</h2>
-      <p className="mt-1 text-sm text-slate-500">Fill in the form and we will reply by email or phone.</p>
+      <MessageSquare className="pointer-events-none absolute -bottom-8 -right-8 h-40 w-40 text-brand-50" />
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        <label className="flex flex-col gap-1.5">
-          <span className="text-sm font-semibold text-slate-700">Your name</span>
-          <input
-            className={`${field} h-11 ${errors.name ? bad : ok}`}
-            value={v.name}
-            onChange={(e) => set("name", e.target.value)}
-            autoComplete="name"
-            maxLength={80}
-            placeholder="Full name"
-          />
-          {errors.name && <span className="text-xs text-red-600">{errors.name}</span>}
-        </label>
+      <div className="relative flex items-center gap-4">
+        <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-900 text-gold-400 shadow-lg shadow-brand-900/20">
+          <MessageSquare className="h-7 w-7" />
+        </span>
+        <div>
+          <h2 className="text-2xl font-black text-brand-900">Send us a message</h2>
+          <p className="text-sm text-slate-500">Fill in the form and we will reply by email or phone.</p>
+        </div>
+      </div>
 
-        <label className="flex flex-col gap-1.5">
-          <span className="text-sm font-semibold text-slate-700">Email</span>
-          <input
-            type="email"
-            className={`${field} h-11 ${errors.email ? bad : ok}`}
-            value={v.email}
-            onChange={(e) => set("email", e.target.value)}
-            autoComplete="email"
-            maxLength={120}
-            placeholder="you@example.com"
-          />
-          {errors.email && <span className="text-xs text-red-600">{errors.email}</span>}
-        </label>
+      {/* Topic: select ki jagah chips */}
+      <div className="relative">
+        <p id="topic-label" className="mb-2 text-sm font-bold text-brand-900">
+          What is this about?
+        </p>
+        <div role="radiogroup" aria-labelledby="topic-label" className="flex flex-wrap gap-2">
+          {TOPICS.map((t) => {
+            const active = v.topic === t;
+            return (
+              <button
+                key={t}
+                type="button"
+                role="radio"
+                aria-checked={active}
+                onClick={() => set("topic", t)}
+                className={`rounded-full border-2 px-4 py-2 text-sm font-semibold transition active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-400 ${
+                  active
+                    ? "border-brand-900 bg-brand-900 text-white shadow-md shadow-brand-900/20"
+                    : "border-brand-100 bg-white text-brand-800 hover:border-gold-400 hover:bg-gold-100/40"
+                }`}
+              >
+                {t}
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
-        <label className="flex flex-col gap-1.5">
-          <span className="text-sm font-semibold text-slate-700">
-            Mobile <span className="font-normal text-slate-400">(optional)</span>
-          </span>
-          <input
-            inputMode="numeric"
-            className={`${field} h-11 ${errors.mobile ? bad : ok}`}
-            value={v.mobile}
-            onChange={(e) => set("mobile", e.target.value.replace(/\D/g, "").slice(0, 10))}
-            autoComplete="tel-national"
-            placeholder="10-digit number"
-          />
-          {errors.mobile && <span className="text-xs text-red-600">{errors.mobile}</span>}
-        </label>
+      <div className="relative grid gap-5 sm:grid-cols-2">
+        <Field id="name" label="Your name" error={errors.name}>
+          <div className="relative">
+            <User className={iconCls} />
+            <input
+              id="name"
+              className={`${field} h-12 pl-12 pr-4 ${errors.name ? bad : ok}`}
+              value={v.name}
+              onChange={(e) => set("name", e.target.value)}
+              autoComplete="name"
+              maxLength={80}
+              placeholder="Full name"
+              aria-invalid={!!errors.name}
+              aria-describedby={errors.name ? "name-error" : undefined}
+            />
+          </div>
+        </Field>
 
-        <label className="flex flex-col gap-1.5">
-          <span className="text-sm font-semibold text-slate-700">Topic</span>
-          <select className={`${field} h-11 ${ok}`} value={v.topic} onChange={(e) => set("topic", e.target.value)}>
-            {TOPICS.map((t) => (
-              <option key={t}>{t}</option>
-            ))}
-          </select>
-        </label>
+        <Field id="email" label="Email" error={errors.email}>
+          <div className="relative">
+            <Mail className={iconCls} />
+            <input
+              id="email"
+              type="email"
+              className={`${field} h-12 pl-12 pr-4 ${errors.email ? bad : ok}`}
+              value={v.email}
+              onChange={(e) => set("email", e.target.value)}
+              autoComplete="email"
+              maxLength={120}
+              placeholder="you@example.com"
+              aria-invalid={!!errors.email}
+              aria-describedby={errors.email ? "email-error" : undefined}
+            />
+          </div>
+        </Field>
 
-        <label className="flex flex-col gap-1.5 sm:col-span-2">
-          <span className="text-sm font-semibold text-slate-700">Message</span>
+        <Field id="mobile" label="Mobile" optional error={errors.mobile} className="sm:col-span-2">
+          <div className="relative">
+            <Smartphone className={iconCls} />
+            <span className="pointer-events-none absolute left-12 top-1/2 -translate-y-1/2 border-r border-brand-200 pr-3 text-sm font-semibold text-brand-900">
+              +91
+            </span>
+            <input
+              id="mobile"
+              inputMode="numeric"
+              className={`${field} h-12 pl-[6.25rem] pr-4 ${errors.mobile ? bad : ok}`}
+              value={v.mobile}
+              onChange={(e) => set("mobile", e.target.value.replace(/\D/g, "").slice(0, 10))}
+              autoComplete="tel-national"
+              placeholder="10-digit number"
+              aria-invalid={!!errors.mobile}
+              aria-describedby={errors.mobile ? "mobile-error" : undefined}
+            />
+          </div>
+        </Field>
+
+        <div className="sm:col-span-2">
+          <label htmlFor="message" className="mb-1.5 block text-sm font-bold text-brand-900">
+            Message
+          </label>
           <textarea
+            id="message"
             rows={5}
-            className={`${field} py-3 ${errors.message ? bad : ok}`}
+            className={`${field} px-4 py-3.5 ${errors.message ? bad : ok}`}
             value={v.message}
             onChange={(e) => set("message", e.target.value.slice(0, MAX))}
             placeholder="How can we help you?"
+            aria-invalid={!!errors.message}
+            aria-describedby={errors.message ? "message-error" : undefined}
           />
-          <span className="flex justify-between text-xs">
-            <span className="text-red-600">{errors.message}</span>
+          <span className="mt-1.5 flex justify-between text-xs">
+            <span id="message-error" className="font-semibold text-red-600">
+              {errors.message}
+            </span>
             <span className="text-slate-400">
               {v.message.length}/{MAX}
             </span>
           </span>
-        </label>
+        </div>
 
         {/* Spam rokne ke liye chhupa hua field: insaan ise nahi bharta, bots bhar dete hain */}
         <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
@@ -175,15 +256,16 @@ export default function ContactForm() {
       </div>
 
       {serverError && (
-        <p role="alert" className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-          {serverError}
-        </p>
+        <div role="alert" className="relative flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+          <span>{serverError}</span>
+        </div>
       )}
 
       <button
         type="submit"
         disabled={status === "sending"}
-        className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-gold-400 px-7 py-3 font-bold text-brand-900 shadow-lg shadow-gold-500/30 transition hover:bg-gold-300 disabled:cursor-not-allowed disabled:opacity-60"
+        className="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-brand-900 px-5 py-4 text-sm font-bold text-white shadow-lg shadow-brand-900/20 transition hover:bg-brand-800 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {status === "sending" ? (
           <>
@@ -191,7 +273,7 @@ export default function ContactForm() {
           </>
         ) : (
           <>
-            Send message <Send className="h-4 w-4" />
+            Send message <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
           </>
         )}
       </button>

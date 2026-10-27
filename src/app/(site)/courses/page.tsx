@@ -1,15 +1,15 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { BookOpen, ChevronRight, GraduationCap, PlayCircle, Video, X } from "lucide-react";
+import { BookOpen, GraduationCap, Lightbulb, PlayCircle, Trophy, Video, X } from "lucide-react";
 import { MODES } from "@/lib/catalog";
 import { SITE } from "@/lib/site-config";
 import { getActiveCourses, getCourseCategories, type CourseCardData } from "@/lib/site-data";
 import { activeFilterCount, hrefWith, parseParams, type CourseParams } from "@/lib/course-query";
 import CourseCard from "@/components/site/CourseCard";
 import CourseFilters from "@/components/site/CourseFilters";
-import CoursesDecor from "@/components/site/CoursesDecor";
+import PageHeader from "@/components/site/PageHeader";
 import Reveal from "@/components/site/Reveal";
-import { CardsSkeleton, EmptyNote, Wave } from "@/components/site/ui";
+import { CardsSkeleton, EmptyNote } from "@/components/site/ui";
 
 export const metadata = { title: `Courses | ${SITE.brand}` };
 
@@ -125,60 +125,14 @@ const HIGHLIGHTS = [
 export default function CoursesPage({ searchParams }: { searchParams: SearchParams }) {
   return (
     <main className="bg-white">
-      {/* Header: same dark blue gradient as the footer call-to-action band */}
-      <header className="relative overflow-hidden bg-gradient-to-br from-brand-950 via-brand-900 to-brand-700 text-white">
-        {/* soft glows */}
-        <div aria-hidden className="pointer-events-none absolute -left-24 -top-28 h-80 w-80 rounded-full bg-gold-400/20 blur-3xl" />
-        <div aria-hidden className="pointer-events-none absolute -bottom-40 right-16 h-96 w-96 rounded-full bg-gold-400/15 blur-3xl" />
-
-        <CoursesDecor />
-
-        <div className="relative z-10 mx-auto max-w-6xl px-4 pb-24 pt-12 text-center md:pb-28 md:pt-16">
-          <Reveal>
-            <nav
-              aria-label="Breadcrumb"
-              className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-2 text-xs font-semibold text-white ring-1 ring-white/25 backdrop-blur"
-            >
-              <Link href="/" className="text-white/80 transition hover:text-gold-300">
-                Home
-              </Link>
-              <ChevronRight className="h-3.5 w-3.5 text-gold-400" />
-              <span aria-current="page" className="font-bold text-gold-400">
-                Courses
-              </span>
-            </nav>
-
-            <div>
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white">
-                <GraduationCap className="h-4 w-4 text-gold-400" /> Learn online
-              </span>
-              <h1 className="mt-5 text-4xl font-black text-white md:text-5xl">All courses</h1>
-              <p className="mx-auto mt-3 max-w-2xl text-slate-200">
-                Pick a category, then open a course to see its modes and prices.
-              </p>
-            </div>
-          </Reveal>
-
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            {HIGHLIGHTS.map((h, i) => {
-              const Icon = h.icon;
-              return (
-                <Reveal key={h.label} delay={150 + i * 100}>
-                  <span className="inline-flex items-center gap-2 rounded-full border border-brand-100 bg-white px-4 py-2 text-sm font-semibold text-brand-900 shadow-sm">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gold-400 text-brand-900">
-                      <Icon className="h-4 w-4" />
-                    </span>
-                    {h.label}
-                  </span>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* wave into the white page below */}
-        <Wave className="absolute inset-x-0 bottom-0 text-white" />
-      </header>
+      <PageHeader
+        crumbs={[{ label: "Home", href: "/" }, { label: "Courses" }]}
+        badge={{ icon: GraduationCap, label: "Learn online" }}
+        title="All courses"
+        text="Pick a category, then open a course to see its modes and prices."
+        highlights={HIGHLIGHTS}
+        decor={[GraduationCap, Lightbulb, BookOpen, Trophy]}
+      />
 
       {/* Filters + courses */}
       <div className="mx-auto max-w-6xl px-4 pb-20 pt-4">

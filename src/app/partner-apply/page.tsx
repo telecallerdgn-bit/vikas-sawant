@@ -1,11 +1,11 @@
 import { Suspense } from "react";
-import Link from "next/link";
-import { ArrowLeft, BadgeCheck, CreditCard, FileText, Handshake, Rocket } from "lucide-react";
+import { BadgeCheck, CreditCard, FileText, Handshake, Rocket } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { SITE } from "@/lib/site-config";
 import PartnerApplyForm from "@/components/PartnerApplyForm";
 import ApplicationStatusCheck from "@/components/ApplicationStatusCheck";
 import Reveal from "@/components/site/Reveal";
+import { Breadcrumb } from "@/components/site/PageHeader";
 import Float from "@/components/site/Float";
 
 async function Form() {
@@ -62,15 +62,10 @@ export default function PartnerApplyPage() {
         </div>
 
         <div className="relative z-10 mx-auto max-w-6xl">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-100 transition hover:text-white"
-          >
-            <ArrowLeft className="h-4 w-4" /> Back to home
-          </Link>
+          <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Partner apply" }]} />
 
           <Reveal>
-            <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-semibold text-gold-300 backdrop-blur">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-semibold text-gold-300 backdrop-blur">
               <Handshake className="h-4 w-4" /> {SITE.brand} Partners
             </span>
             <h1 className="mt-5 text-4xl font-black leading-tight md:text-5xl">

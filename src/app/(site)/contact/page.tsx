@@ -1,9 +1,11 @@
 import Link from "next/link";
-import { Clock, Mail, MessageCircle, Phone } from "lucide-react";
-import { SectionHead } from "@/components/site/ui";
+import { ArrowRight, ArrowUpRight, Clock, Handshake, Mail, MessageCircle, Phone } from "lucide-react";
+import { SITE } from "@/lib/site-config";
 import ContactForm from "@/components/site/ContactForm";
+import PageHeader from "@/components/site/PageHeader";
+import Reveal from "@/components/site/Reveal";
 
-export const metadata = { title: "Contact | vikas-sawant" };
+export const metadata = { title: `Contact | ${SITE.brand}` };
 
 const digits = (v?: string) => (v ?? "").replace(/\D/g, "");
 
@@ -38,68 +40,93 @@ export default function ContactPage() {
   ].filter(Boolean) as { icon: typeof Mail; title: string; value: string; href: string; action: string }[];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-14">
-      <SectionHead
-        eyebrow="We are here"
+    <main className="bg-white">
+      <PageHeader
+        crumbs={[{ label: "Home", href: "/" }, { label: "Contact" }]}
+        badge={{ icon: MessageCircle, label: "We are here" }}
         title="Contact us"
         text="Questions about a course, an order or becoming a partner? Reach out."
+        decor={[Mail, Phone, MessageCircle, Clock]}
       />
 
-      <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_1.3fr]">
-        {/* Contact details */}
-        <div className="space-y-4">
-          {cards.length === 0 ? (
-            <p className="rounded-3xl border border-dashed border-brand-200 bg-white p-8 text-center text-slate-500">
-              Contact details will be available soon. You can still send us a message using the form.
-            </p>
-          ) : (
-            cards.map((c) => {
-              const Icon = c.icon;
-              return (
-                <div
-                  key={c.title}
-                  className="flex items-center gap-4 rounded-3xl border border-brand-100 bg-white p-5 shadow-sm"
-                >
-                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
-                    <Icon className="h-7 w-7" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="font-bold text-brand-900">{c.title}</h3>
-                    <p className="break-all text-sm text-slate-600">{c.value}</p>
+      <div className="mx-auto max-w-6xl px-4 pb-20 pt-6">
+        <div className="grid items-start gap-8 lg:grid-cols-[1fr_1.3fr]">
+          {/* Contact details */}
+          <div className="space-y-4">
+            {cards.length === 0 ? (
+              <Reveal>
+                <p className="rounded-3xl border border-dashed border-brand-200 bg-brand-50/60 p-8 text-center text-slate-500">
+                  Contact details will be available soon. You can still send us a message using the form.
+                </p>
+              </Reveal>
+            ) : (
+              cards.map((c, i) => {
+                const Icon = c.icon;
+                const external = c.href.startsWith("http");
+                return (
+                  <Reveal key={c.title} delay={i * 110}>
                     <a
                       href={c.href}
-                      target={c.href.startsWith("http") ? "_blank" : undefined}
-                      rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="mt-2 inline-block rounded-full bg-gold-400 px-4 py-1.5 text-sm font-bold text-brand-900 hover:bg-gold-300"
+                      target={external ? "_blank" : undefined}
+                      rel={external ? "noopener noreferrer" : undefined}
+                      className="group relative flex items-center gap-4 overflow-hidden rounded-3xl border border-brand-100 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-gold-400 hover:shadow-xl"
                     >
-                      {c.action}
+                      <Icon className="pointer-events-none absolute -bottom-5 -right-5 h-24 w-24 text-brand-50 transition duration-300 group-hover:rotate-12 group-hover:text-gold-400/20" />
+
+                      <span className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-900 text-gold-400 shadow-lg shadow-brand-900/20 transition duration-300 group-hover:-rotate-6">
+                        <Icon className="h-7 w-7" />
+                      </span>
+                      <div className="relative min-w-0 flex-1">
+                        <h3 className="font-black text-brand-900">{c.title}</h3>
+                        <p className="break-all text-sm text-slate-600">{c.value}</p>
+                        <span className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-gold-400 px-4 py-1.5 text-sm font-bold text-brand-900 transition group-hover:bg-brand-900 group-hover:text-white">
+                          {c.action}
+                          <ArrowUpRight className="h-3.5 w-3.5" />
+                        </span>
+                      </div>
+                      <span className="absolute bottom-0 left-1/2 h-1 w-0 -translate-x-1/2 rounded-full bg-gold-400 transition-all duration-300 group-hover:w-2/3" />
                     </a>
-                  </div>
-                </div>
-              );
-            })
-          )}
+                  </Reveal>
+                );
+              })
+            )}
 
-          {hours && (
-            <p className="flex items-center gap-2 px-1 text-sm text-slate-600">
-              <Clock className="h-4 w-4 text-gold-600" />
-              <span>
-                <b>Support hours:</b> {hours}
-              </span>
-            </p>
-          )}
+            {hours && (
+              <Reveal delay={cards.length * 110}>
+                <p className="flex items-center gap-3 rounded-2xl bg-gold-100/60 px-4 py-3 text-sm text-brand-900">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gold-400">
+                    <Clock className="h-4 w-4" />
+                  </span>
+                  <span>
+                    <b>Support hours:</b> {hours}
+                  </span>
+                </p>
+              </Reveal>
+            )}
 
-          <p className="px-1 text-sm text-slate-500">
-            Want to sell our courses?{" "}
-            <Link href="/partner-apply" className="font-semibold text-brand-700 hover:underline">
-              Become a partner
-            </Link>
-          </p>
+            {/* Partner call-out */}
+            <Reveal delay={(cards.length + 1) * 110}>
+              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-800 to-brand-900 p-6 text-white">
+                <div aria-hidden className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gold-400/15 blur-2xl" />
+                <Handshake className="pointer-events-none absolute -bottom-6 -right-4 h-28 w-28 -rotate-12 text-white/5" strokeWidth={1} />
+                <p className="relative text-lg font-black">Want to sell our courses?</p>
+                <p className="relative mt-1 text-sm text-brand-100">Recommend courses and earn on every enrolment.</p>
+                <Link
+                  href="/partner-apply"
+                  className="relative mt-4 inline-flex items-center gap-2 rounded-full bg-gold-400 px-5 py-2.5 text-sm font-bold text-brand-900 transition hover:bg-gold-300 active:scale-95"
+                >
+                  Become a partner <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Message form */}
+          <Reveal variant="right">
+            <ContactForm />
+          </Reveal>
         </div>
-
-        {/* Message form */}
-        <ContactForm />
       </div>
-    </div>
+    </main>
   );
 }
