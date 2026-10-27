@@ -59,4 +59,29 @@ export const SITE = {
     { name: "Pune", slug: "pune", centres: 1, image: "" },
     { name: "Thane", slug: "thane", centres: 1, image: "" },
   ],
+  // Home page ke "Testimonials" section ke liye. Khali list ([]) rakhne par section chhup jaata hai.
+  // Photo ho to image: "/testimonials/naam.jpg" daalo (public/testimonials/ mein rakho). rating 1 se 5 tak (0.5 chalega).
+  testimonials: [
+    {
+      name: "Rupal Kishor Jadhav",
+      role: "From Kalyan, MH",
+      rating: 4.5,
+      text: "The 4 months programme of Banking entrance exam was being very useful to crack the exams in future. One thing I liked was there was no confusion as to what should be studied for which exam. The portion was taught in such a way that it is useful for all type of government exams.",
+      image: "",
+    },
+    {
+      name: "Deepti Tupe",
+      role: "From Dombivli, IN",
+      rating: 4.5,
+      text: "For Bank competitive exam the seminar was taken which encourage me to join this class. This class is very much useful to me in future. The knowledge given by Vikas Sir and Sagar Sir is very much useful. Because the explanation is good and the concept gets clear to me.",
+      image: "",
+    },
+    {
+      name: "Harshal Indulkar",
+      role: "From Ambernath, IN",
+      rating: 5,
+      text: "It was a amazing experience of learning new and old things in a different manner making it more easy for us to understand. I will always look forward to make the full out of it and make the use of learning to get placed by any bank. Thanking Vikas and Sagar Sir for their effort for teaching us in a nice manner.",
+      image: "",
+    },
+  ],
 };

@@ -4,15 +4,12 @@ import { Suspense } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
-  BadgeCheck,
   BookOpen,
   GraduationCap,
-  Handshake,
   Layers,
   Newspaper,
   PlayCircle,
   Radio,
-  Share2,
   UserPlus,
   Video,
   ListChecks,
@@ -31,6 +28,7 @@ import Float from "@/components/site/Float";
 import ModesDecor from "@/components/site/ModesDecor";
 import CoursesDecor from "@/components/site/CoursesDecor";
 import DistrictExplorer from "@/components/site/DistrictExplorer";
+import Testimonials from "@/components/site/Testimonials";
 import { CardsSkeleton, EmptyNote, Wave } from "@/components/site/ui";
 
 export const metadata = { title: `${SITE.brand} | ${SITE.tagline}` };
@@ -261,98 +259,6 @@ function Districts() {
   return <DistrictExplorer districts={SITE.districts} />;
 }
 
-function PartnerBand() {
-  const points = [
-    { icon: UserPlus, title: "Apply", text: "Send your application" },
-    { icon: BadgeCheck, title: "Get approved", text: "We review and approve you" },
-    { icon: Share2, title: "Share your link", text: "Earn on every enrolment" },
-  ];
-  const offsets = ["", "md:ml-10", "md:ml-20"];
-
-  return (
-    <section className="bg-[#EEF3FB] px-4 py-16">
-      <div className="mx-auto max-w-6xl">
-        <Reveal variant="zoom">
-          <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-800 via-brand-900 to-brand-900 px-8 py-12 text-white md:px-14 md:py-16">
-            {/* Background vectors */}
-            <div aria-hidden className="pointer-events-none absolute inset-0">
-              <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-gold-400/15 blur-3xl" />
-              <div className="absolute -bottom-28 left-1/3 h-72 w-72 rounded-full bg-brand-500/30 blur-3xl" />
-              <svg className="absolute inset-0 h-full w-full text-white/10" fill="currentColor">
-                <defs>
-                  <pattern id="partner-dots" width="24" height="24" patternUnits="userSpaceOnUse">
-                    <circle cx="2" cy="2" r="1.3" />
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#partner-dots)" />
-              </svg>
-              <svg className="absolute -right-20 -top-16 h-[24rem] w-[24rem] text-white/15" viewBox="0 0 400 400" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <circle cx="200" cy="200" r="70" />
-                <circle cx="200" cy="200" r="125" />
-                <circle cx="200" cy="200" r="180" strokeDasharray="4 9" />
-                <circle cx="325" cy="200" r="7" fill="#fbbf24" stroke="none" />
-              </svg>
-              <svg className="absolute bottom-10 left-[46%] hidden h-5 w-5 text-gold-300/70 md:block" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M8 0C8 5 11 8 16 8C11 8 8 11 8 16C8 11 5 8 0 8C5 8 8 5 8 0Z" />
-              </svg>
-              <svg className="absolute right-[8%] top-10 hidden h-4 w-4 text-gold-300/70 md:block" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M8 0C8 5 11 8 16 8C11 8 8 11 8 16C8 11 5 8 0 8C5 8 8 5 8 0Z" />
-              </svg>
-            </div>
-
-            <div className="relative grid items-center gap-12 md:grid-cols-2 md:gap-14">
-              {/* Left: message + button */}
-              <div>
-                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gold-400 text-brand-900 shadow-lg shadow-gold-500/20">
-                  <Handshake className="h-7 w-7" />
-                </span>
-                <h2 className="mt-6 text-3xl font-black leading-tight md:text-4xl">Become a partner</h2>
-                <p className="mt-3 max-w-md text-brand-100">
-                  Recommend courses to students and earn on every enrolment. Apply, get approved and start sharing your
-                  own referral link.
-                </p>
-                <Link
-                  href="/partner-apply"
-                  className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold-400 px-7 py-3.5 font-bold text-brand-900 shadow-lg shadow-gold-500/20 transition hover:bg-gold-300 active:scale-95"
-                >
-                  Apply now <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-
-              {/* Right: 3 steps as glass chips */}
-              <div className="space-y-4">
-                {points.map((p, i) => {
-                  const Icon = p.icon;
-                  return (
-                    <Float
-                      key={p.title}
-                      delay={i * 0.6}
-                      duration={6}
-                      distance={6}
-                      className={`flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur ${offsets[i]}`}
-                    >
-                      <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gold-400 text-brand-900">
-                        <Icon className="h-6 w-6" />
-                        <span className="absolute -right-1.5 -top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-white text-xs font-black text-brand-900">
-                          {i + 1}
-                        </span>
-                      </span>
-                      <div>
-                        <p className="font-black">{p.title}</p>
-                        <p className="text-sm text-brand-100">{p.text}</p>
-                      </div>
-                    </Float>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
 async function LatestPosts() {
   const { posts } = await getPublishedPosts(3);
   if (posts.length === 0) return null; // no posts yet, so the section stays hidden
@@ -411,7 +317,7 @@ export default function HomePage() {
       </Suspense>
       <HowItWorks />
       <Districts />
-      <PartnerBand />
+      <Testimonials items={SITE.testimonials} />
       <Suspense fallback={null}>
         <LatestPosts />
       </Suspense>

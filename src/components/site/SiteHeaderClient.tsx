@@ -9,6 +9,7 @@ import { Clock, Mail, Menu, Phone, Search, User, X } from "lucide-react";
 
 const NAV = [
   { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
   { label: "Courses", href: "/courses" },
   { label: "Blog", href: "/blog" },
   { label: "Contact Us", href: "/contact" },
