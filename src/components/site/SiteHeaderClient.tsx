@@ -4,8 +4,8 @@ import Form from "next/form";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Suspense, useState } from "react";
-import { Clock, Mail, Menu, Phone, Search, User, X } from "lucide-react";
+import { Suspense, useState, type ReactNode } from "react";
+import { Clock, Mail, Menu, Phone, Search, X } from "lucide-react";
 
 const NAV = [
   { label: "Home", href: "/" },
@@ -23,6 +23,8 @@ type Info = {
   email: string;
   hours: string;
   social: Social;
+  authDesktop: ReactNode; // top bar ka Login/Register ya logged-in hissa (server se aata hai)
+  authMobile: ReactNode; // mobile menu ka Login/Register ya logged-in hissa
 };
 
 type ViewProps = Info & {
@@ -82,7 +84,21 @@ function SocialIcon({ name }: { name: SocialKey }) {
   }
 }
 
-function HeaderView({ brand, phone, email, hours, social, pathname, open, searchOpen, onToggle, onSearch, onClose }: ViewProps) {
+function HeaderView({
+  brand,
+  phone,
+  email,
+  hours,
+  social,
+  authDesktop,
+  authMobile,
+  pathname,
+  open,
+  searchOpen,
+  onToggle,
+  onSearch,
+  onClose,
+}: ViewProps) {
   const active = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   // The type is written on the full list first. If it is written only on the result of .filter(),
@@ -144,16 +160,7 @@ function HeaderView({ brand, phone, email, hours, social, pathname, open, search
               </div>
             )}
 
-            <div className="flex items-center gap-2 self-stretch bg-brand-900 px-4 text-sm font-semibold text-white sm:px-6">
-              <User className="h-4 w-4 shrink-0" />
-              <Link href="/student/login" className="py-2.5 hover:text-gold-300">
-                Login
-              </Link>
-              <span className="text-white/50">/</span>
-              <Link href="/student/register" className="py-2.5 hover:text-gold-300">
-                Register
-              </Link>
-            </div>
+            {authDesktop}
           </div>
         </div>
       </div>
@@ -233,22 +240,8 @@ function HeaderView({ brand, phone, email, hours, social, pathname, open, search
                 {n.label}
               </Link>
             ))}
-            <div className="flex gap-2 pt-2">
-              <Link
-                href="/student/login"
-                onClick={onClose}
-                className="flex-1 rounded-xl border border-brand-200 py-2.5 text-center text-sm font-semibold text-brand-900"
-              >
-                Login
-              </Link>
-              <Link
-                href="/student/register"
-                onClick={onClose}
-                className="flex-1 rounded-xl bg-gold-400 py-2.5 text-center text-sm font-bold text-brand-900"
-              >
-                Register
-              </Link>
-            </div>
+            {/* Slot ke andar kisi bhi link par click karne se mobile menu band ho jata hai */}
+            <div onClick={onClose}>{authMobile}</div>
 
             {socials.length > 0 && (
               <div className="flex items-center gap-4 pt-3 text-brand-900">
