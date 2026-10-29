@@ -87,7 +87,7 @@ function Row({
 
 function Heading({ icon: Icon, children }: { icon: LucideIcon; children: React.ReactNode }) {
   return (
-    <h2 className="mb-3 flex items-center gap-2 px-1 text-xs font-black uppercase tracking-widest text-brand-900">
+    <h2 className="mb-3 flex items-center gap-2 px-1 text-xs font-bold uppercase tracking-widest text-brand-900">
       <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gold-100 text-brand-900">
         <Icon className="h-3.5 w-3.5" />
       </span>
@@ -213,7 +213,7 @@ export default function CourseFilters({
           <div className="h-1.5 bg-gradient-to-r from-gold-400 via-gold-300 to-brand-300" />
           <div className="p-5">
             <div className="mb-6 flex items-center justify-between">
-              <h2 className="flex items-center gap-3 text-lg font-black text-brand-900">
+              <h2 className="flex items-center gap-3 text-lg font-bold text-brand-900">
                 <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-900 text-gold-400 shadow-md shadow-brand-900/20">
                   <SlidersHorizontal className="h-5 w-5" />
                 </span>

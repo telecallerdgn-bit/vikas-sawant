@@ -1,10 +1,10 @@
 import { Suspense } from "react";
-import AdminDashboard from "@/components/AdminDashboard";
+import AdminOverview from "@/components/admin/AdminOverview";
 
-export default function AdminOverview() {
+export default function AdminOverviewPage({ searchParams }: { searchParams: Promise<{ range?: string }> }) {
   return (
     <Suspense fallback={<p className="text-sm text-slate-400">Loading dashboard...</p>}>
-      <AdminDashboard />
+      <AdminOverview searchParams={searchParams} />
     </Suspense>
   );
 }

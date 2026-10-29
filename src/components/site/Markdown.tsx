@@ -2,7 +2,7 @@ import ReactMarkdown, { type Components } from "react-markdown";
 
 const components: Components = {
   // The page already has one h1, so a markdown "#" becomes an h2
-  h1: ({ children }) => <h2 className="mb-3 mt-10 text-3xl font-black text-[#2b1a5a]">{children}</h2>,
+  h1: ({ children }) => <h2 className="mb-3 mt-10 text-3xl font-bold text-[#2b1a5a]">{children}</h2>,
   h2: ({ children }) => <h2 className="mb-3 mt-10 text-2xl font-bold text-[#2b1a5a]">{children}</h2>,
   h3: ({ children }) => <h3 className="mb-2 mt-8 text-xl font-bold text-[#2b1a5a]">{children}</h3>,
   p: ({ children }) => <p className="my-4 leading-relaxed text-slate-700">{children}</p>,

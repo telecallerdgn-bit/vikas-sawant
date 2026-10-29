@@ -145,18 +145,18 @@ export default function PartnersView({
           value={String(totalStudents)}
           sub="Brought in by partners"
           icon={GraduationCap}
-          card="border-violet-100 from-violet-50 to-purple-100/70"
-          iconBox="bg-violet-500 text-white"
-          labelCls="text-violet-700"
+          card="border-cyan-100 from-cyan-50 to-sky-100/70"
+          iconBox="bg-cyan-500 text-white"
+          labelCls="text-cyan-700"
         />
         <StatCard
           label="Total earned"
           value={inr.format(totalEarned)}
           sub="Commission credited"
           icon={Coins}
-          card="border-orange-100 from-orange-50 to-amber-100/70"
-          iconBox="bg-orange-500 text-white"
-          labelCls="text-orange-700"
+          card="border-blue-200 from-blue-50 to-blue-100/80"
+          iconBox="bg-blue-500 text-white"
+          labelCls="text-blue-700"
         />
       </div>
 

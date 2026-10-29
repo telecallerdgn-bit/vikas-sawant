@@ -65,18 +65,18 @@ export default function CourseCard({ course }: { course: CourseCardData }) {
         <div className="relative">
           {course.offerFrom !== null ? (
             <p className="flex items-baseline gap-2">
-              <span className="text-xl font-black text-gold-600">{rupees.format(course.offerFrom)}</span>
+              <span className="text-xl font-bold text-gold-600">{rupees.format(course.offerFrom)}</span>
               <span className="text-sm font-semibold text-slate-400 line-through">{rupees.format(course.from)}</span>
             </p>
           ) : (
             <p className="flex items-baseline gap-1.5">
               <span className="text-xs font-semibold text-slate-500">From</span>
-              <span className="text-xl font-black text-gold-600">{rupees.format(course.from)}</span>
+              <span className="text-xl font-bold text-gold-600">{rupees.format(course.from)}</span>
             </p>
           )}
         </div>
 
-        <h3 className="relative mt-3 text-lg font-black leading-snug text-brand-900">{course.name}</h3>
+        <h3 className="relative mt-3 text-lg font-bold leading-snug text-brand-900">{course.name}</h3>
         <span className="relative mt-2 block h-1 w-10 rounded-full bg-gold-400 transition-all duration-300 group-hover:w-24" />
 
         {course.summary && <p className="relative mt-3 line-clamp-2 text-sm text-slate-600">{course.summary}</p>}

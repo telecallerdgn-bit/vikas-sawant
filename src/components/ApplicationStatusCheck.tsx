@@ -95,7 +95,7 @@ export default function ApplicationStatusCheck() {
           <Search className="h-6 w-6" />
         </span>
         <div>
-          <h2 className="text-lg font-black text-brand-900">Application status</h2>
+          <h2 className="text-lg font-bold text-brand-900">Application status</h2>
           <p className="text-xs text-slate-500">Already applied? Check where it stands.</p>
         </div>
       </div>
@@ -149,7 +149,7 @@ export default function ApplicationStatusCheck() {
       {result && (
         <div className="relative mt-5 space-y-4 border-t border-brand-100 pt-5 text-sm">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="font-black text-brand-900">{result.name}</p>
+            <p className="font-bold text-brand-900">{result.name}</p>
             <span className={`rounded-full px-3 py-1 text-xs font-bold ${BADGE[result.status] ?? "bg-brand-50 text-brand-800"}`}>
               {LABEL[result.status] ?? result.status}
             </span>
@@ -169,7 +169,7 @@ export default function ApplicationStatusCheck() {
                       />
                     )}
                     <span
-                      className={`relative z-10 flex h-6 w-6 items-center justify-center rounded-full border-2 text-[10px] font-black ${
+                      className={`relative z-10 flex h-6 w-6 items-center justify-center rounded-full border-2 text-[10px] font-bold ${
                         reached ? "border-brand-900 bg-brand-900 text-gold-400" : "border-brand-200 bg-white text-slate-300"
                       }`}
                     >
@@ -200,7 +200,7 @@ export default function ApplicationStatusCheck() {
                 <div className="mt-3 flex items-center justify-between gap-2 rounded-lg bg-white px-3 py-2">
                   <div>
                     <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-500">Referral code</p>
-                    <p className="font-mono text-base font-black tracking-wider text-brand-900">{result.referralCode}</p>
+                    <p className="font-mono text-base font-bold tracking-wider text-brand-900">{result.referralCode}</p>
                   </div>
                   <button
                     type="button"

@@ -120,7 +120,7 @@ function LoginForm() {
           <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-900 text-gold-400 shadow-lg shadow-brand-900/20">
             <RoleIcon className="h-7 w-7" />
           </span>
-          <h2 className="mt-4 text-3xl font-black text-brand-900">{label} Login</h2>
+          <h2 className="mt-4 text-3xl font-bold text-brand-900">{label} Login</h2>
           <p className="mt-1.5 text-sm text-slate-500">Enter your email and password.</p>
         </div>
 

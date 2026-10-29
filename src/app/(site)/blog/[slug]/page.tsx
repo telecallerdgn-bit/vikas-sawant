@@ -18,7 +18,7 @@ async function View({ params }: { params: Promise<{ slug: string }> }) {
         <ArrowLeft className="h-4 w-4" /> All articles
       </Link>
 
-      <h1 className="mt-4 text-3xl font-black leading-tight text-[#2b1a5a] md:text-5xl">{post.title}</h1>
+      <h1 className="mt-4 text-3xl font-bold leading-tight text-[#2b1a5a] md:text-5xl">{post.title}</h1>
       <p className="mt-3 text-sm text-slate-500">
         {post.publishedAt ? `${dateLong.format(post.publishedAt)} · ` : ""}
         By {SITE.brand}

@@ -108,7 +108,7 @@ export default function Testimonials({ items }: { items: Testimonial[] }) {
           />
         ) : (
           <div className="flex h-full items-center justify-center">
-            <span className="flex h-28 w-28 items-center justify-center rounded-full bg-gold-400 text-5xl font-black text-brand-900 ring-8 ring-white/20">
+            <span className="flex h-28 w-28 items-center justify-center rounded-full bg-gold-400 text-5xl font-bold text-brand-900 ring-8 ring-white/20">
               {t.name.trim().charAt(0).toUpperCase()}
             </span>
           </div>
@@ -127,7 +127,7 @@ export default function Testimonials({ items }: { items: Testimonial[] }) {
 
         <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-xl font-black text-brand-900">{t.name}</p>
+            <p className="text-xl font-bold text-brand-900">{t.name}</p>
             <p className="mt-0.5 text-sm text-slate-500">{t.role}</p>
           </div>
           {t.course && (
@@ -150,7 +150,7 @@ export default function Testimonials({ items }: { items: Testimonial[] }) {
             <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-1.5 text-sm font-semibold text-brand-800">
               <Quote className="h-4 w-4" /> Testimonials
             </span>
-            <h2 className="mt-5 text-3xl font-black text-brand-900 md:text-4xl">What our learners say</h2>
+            <h2 className="mt-5 text-3xl font-bold text-brand-900 md:text-4xl">What our learners say</h2>
             <p className="mx-auto mt-3 max-w-2xl text-slate-600">Hear from the students who learn with us.</p>
           </div>
         </Reveal>

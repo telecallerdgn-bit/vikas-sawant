@@ -48,7 +48,7 @@ export function PageTitle({ title, subtitle }: { title: string; subtitle: string
   return (
     <header>
       <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">Student</p>
-      <h1 className="mt-1 text-3xl font-black text-[#0b2149]">{title}</h1>
+      <h1 className="mt-1 text-3xl font-bold text-[#0b2149]">{title}</h1>
       <p className="mt-1 text-sm text-slate-500">{subtitle}</p>
     </header>
   );
@@ -76,7 +76,7 @@ export function Tile({
         </span>
         <p className={`text-xs font-bold uppercase tracking-wider ${t.label}`}>{label}</p>
       </div>
-      <p className="mt-4 text-3xl font-black tracking-tight lining-nums text-slate-900">{value}</p>
+      <p className="mt-4 text-3xl font-bold tracking-tight lining-nums text-slate-900">{value}</p>
       <p className="mt-1 text-sm text-slate-500">{sub}</p>
     </div>
   );

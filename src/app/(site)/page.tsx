@@ -60,7 +60,7 @@ function Modes() {
             <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-1.5 text-sm font-semibold text-brand-800">
               <Layers className="h-4 w-4" /> Learn your way
             </span>
-            <h2 className="mt-5 text-3xl font-black text-brand-900 md:text-4xl">Pick the mode that fits you</h2>
+            <h2 className="mt-5 text-3xl font-bold text-brand-900 md:text-4xl">Pick the mode that fits you</h2>
             <p className="mx-auto mt-3 max-w-2xl text-slate-600">
               The same course, offered in different ways. Choose what matches your time and budget.
             </p>
@@ -114,7 +114,7 @@ async function Courses() {
             <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-1.5 text-sm font-semibold text-brand-800">
               <GraduationCap className="h-4 w-4" /> Learn online
             </span>
-            <h2 className="mt-5 text-3xl font-black text-brand-900 md:text-4xl">Our courses</h2>
+            <h2 className="mt-5 text-3xl font-bold text-brand-900 md:text-4xl">Our courses</h2>
             <p className="mx-auto mt-3 max-w-2xl text-slate-600">Find a course and see every mode and price.</p>
           </div>
         </Reveal>
@@ -188,7 +188,7 @@ function HowItWorks() {
                 <ListChecks className="h-5 w-5" />
               </span>
               <div>
-                <p className="text-lg font-black leading-none text-brand-900">3 steps</p>
+                <p className="text-lg font-bold leading-none text-brand-900">3 steps</p>
                 <p className="mt-1 text-xs text-slate-500">and you are in</p>
               </div>
             </Float>
@@ -201,7 +201,7 @@ function HowItWorks() {
             <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-1.5 text-sm font-semibold text-brand-800">
               <ListChecks className="h-4 w-4" /> Simple steps
             </span>
-            <h2 className="mt-5 text-3xl font-black text-brand-900 md:text-4xl">How it works</h2>
+            <h2 className="mt-5 text-3xl font-bold text-brand-900 md:text-4xl">How it works</h2>
             <p className="mt-3 max-w-md text-slate-600">
               From sign up to your first class, it takes just three easy steps.
             </p>
@@ -224,14 +224,14 @@ function HowItWorks() {
 
                     <span className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-brand-200 bg-white text-brand-900 shadow-md transition duration-300 group-hover:-translate-y-1 group-hover:border-gold-400 group-hover:bg-brand-900 group-hover:text-gold-400 group-hover:shadow-xl">
                       <Icon className="h-7 w-7" />
-                      <span className="absolute -right-1.5 -top-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-gold-400 text-xs font-black text-brand-900 ring-4 ring-white">
+                      <span className="absolute -right-1.5 -top-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-gold-400 text-xs font-bold text-brand-900 ring-4 ring-white">
                         {i + 1}
                       </span>
                     </span>
 
                     <div className="pt-1">
                       <p className="text-xs font-bold uppercase tracking-widest text-gold-600">Step {i + 1}</p>
-                      <h3 className="mt-1 text-xl font-black text-brand-900">{s.title}</h3>
+                      <h3 className="mt-1 text-xl font-bold text-brand-900">{s.title}</h3>
                       <p className="mt-1.5 max-w-sm text-base leading-relaxed text-slate-600">{s.text}</p>
                     </div>
                   </div>
@@ -271,7 +271,7 @@ async function LatestPosts() {
             <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-1.5 text-sm font-semibold text-brand-800">
               <Newspaper className="h-4 w-4" /> Our blog
             </span>
-            <h2 className="mt-5 text-3xl font-black text-brand-900 md:text-4xl">Recent articles</h2>
+            <h2 className="mt-5 text-3xl font-bold text-brand-900 md:text-4xl">Recent articles</h2>
             <p className="mx-auto mt-3 max-w-2xl text-slate-600">Read our latest articles and updates.</p>
           </div>
         </Reveal>

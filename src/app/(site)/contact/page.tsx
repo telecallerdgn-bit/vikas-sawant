@@ -77,7 +77,7 @@ export default function ContactPage() {
                         <Icon className="h-7 w-7" />
                       </span>
                       <div className="relative min-w-0 flex-1">
-                        <h3 className="font-black text-brand-900">{c.title}</h3>
+                        <h3 className="font-bold text-brand-900">{c.title}</h3>
                         <p className="break-all text-sm text-slate-600">{c.value}</p>
                         <span className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-gold-400 px-4 py-1.5 text-sm font-bold text-brand-900 transition group-hover:bg-brand-900 group-hover:text-white">
                           {c.action}
@@ -109,7 +109,7 @@ export default function ContactPage() {
               <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-800 to-brand-900 p-6 text-white">
                 <div aria-hidden className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gold-400/15 blur-2xl" />
                 <Handshake className="pointer-events-none absolute -bottom-6 -right-4 h-28 w-28 -rotate-12 text-white/5" strokeWidth={1} />
-                <p className="relative text-lg font-black">Want to sell our courses?</p>
+                <p className="relative text-lg font-bold">Want to sell our courses?</p>
                 <p className="relative mt-1 text-sm text-brand-100">Recommend courses and earn on every enrolment.</p>
                 <Link
                   href="/partner-apply"

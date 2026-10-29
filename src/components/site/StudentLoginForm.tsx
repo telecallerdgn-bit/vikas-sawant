@@ -81,7 +81,7 @@ export default function StudentLoginForm() {
           <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-3.5 py-1 text-xs font-semibold text-brand-800">
             <GraduationCap className="h-3.5 w-3.5" /> Student login
           </span>
-          <h2 className="mt-4 text-3xl font-black text-brand-900">Welcome back</h2>
+          <h2 className="mt-4 text-3xl font-bold text-brand-900">Welcome back</h2>
           <p className="mt-1.5 text-sm text-slate-500">Log in with your mobile number.</p>
         </div>
 

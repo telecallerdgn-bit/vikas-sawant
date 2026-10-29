@@ -24,7 +24,7 @@ export default async function HeaderAuth({ guest }: { guest: ReactNode }) {
         title="Go to my dashboard"
         className="flex items-center gap-2 rounded-lg py-1.5 pr-2 hover:text-gold-300"
       >
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gold-400 text-sm font-black text-brand-900">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gold-400 text-sm font-bold text-brand-900">
           {initial}
         </span>
         <span className="hidden max-w-[9rem] truncate text-sm font-bold sm:block">Hi, {first}</span>

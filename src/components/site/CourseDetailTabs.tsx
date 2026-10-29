@@ -10,7 +10,7 @@ export default function CourseDetailTabs({ tabs }: { tabs: DetailTab[] }) {
 
   return (
     <section className="rounded-3xl border border-brand-100 bg-white p-7 md:p-9">
-      <h2 className="text-2xl font-black text-brand-900">More details</h2>
+      <h2 className="text-2xl font-bold text-brand-900">More details</h2>
 
       <div role="tablist" aria-label="More details" className="mt-5 flex overflow-x-auto rounded-xl bg-brand-50 p-1">
         {tabs.map((t) => {

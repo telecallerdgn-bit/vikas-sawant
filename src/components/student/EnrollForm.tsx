@@ -86,7 +86,7 @@ export default function EnrollForm({
                   {o.original !== null && (
                     <span className="block text-xs text-slate-400 line-through">{money.format(o.original)}</span>
                   )}
-                  <span className="block text-base font-black text-[#0b2149]">{money.format(o.price)}</span>
+                  <span className="block text-base font-bold text-[#0b2149]">{money.format(o.price)}</span>
                 </span>
               </label>
             );

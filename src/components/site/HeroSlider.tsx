@@ -106,7 +106,7 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
                   {s.eyebrow && (
                     <p className="text-sm font-bold uppercase tracking-widest text-gold-300">{s.eyebrow}</p>
                   )}
-                  <h1 className="mt-3 text-4xl font-black leading-tight md:text-6xl">
+                  <h1 className="mt-3 text-4xl font-bold leading-tight md:text-6xl">
                     {s.title}
                     {s.accent && (
                       <>

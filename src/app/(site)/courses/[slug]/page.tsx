@@ -43,7 +43,7 @@ async function View({ params }: { params: Promise<{ slug: string }> }) {
             <Link href="/courses" className="inline-flex items-center gap-1 text-sm font-semibold text-gold-300 hover:underline">
               <ArrowLeft className="h-4 w-4" /> All courses
             </Link>
-            <h1 className="mt-4 text-3xl font-black leading-tight md:text-5xl">{course.name}</h1>
+            <h1 className="mt-4 text-3xl font-bold leading-tight md:text-5xl">{course.name}</h1>
             {course.summary && <p className="mt-4 max-w-xl text-lg text-brand-100">{course.summary}</p>}
             <div className="mt-6 flex flex-wrap gap-2">
               {offerLive && (
@@ -83,7 +83,7 @@ async function View({ params }: { params: Promise<{ slug: string }> }) {
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 lg:grid-cols-[1.6fr_1fr]">
           <div className="space-y-8">
             <article className="rounded-3xl border border-brand-100 bg-white p-7 md:p-9">
-              <h2 className="text-2xl font-black text-brand-900">About this course</h2>
+              <h2 className="text-2xl font-bold text-brand-900">About this course</h2>
               {course.description ? (
                 <Markdown text={course.description} />
               ) : (
@@ -95,7 +95,7 @@ async function View({ params }: { params: Promise<{ slug: string }> }) {
           </div>
 
           <aside className="h-fit rounded-3xl border border-brand-100 bg-white p-6 shadow-lg lg:sticky lg:top-24">
-            <h2 className="text-xl font-black text-brand-900">Choose your mode</h2>
+            <h2 className="text-xl font-bold text-brand-900">Choose your mode</h2>
 
             {offerLive && (
               <p className="mt-3 rounded-xl bg-gold-100 px-3 py-2 text-sm font-semibold text-gold-800">
@@ -118,10 +118,10 @@ async function View({ params }: { params: Promise<{ slug: string }> }) {
                       {discounted ? (
                         <>
                           <p className="text-xs text-slate-400 line-through">{rupees.format(p.price)}</p>
-                          <p className="text-lg font-black text-brand-700">{rupees.format(offerPrice as number)}</p>
+                          <p className="text-lg font-bold text-brand-700">{rupees.format(offerPrice as number)}</p>
                         </>
                       ) : (
-                        <p className="text-lg font-black text-brand-700">{rupees.format(p.price)}</p>
+                        <p className="text-lg font-bold text-brand-700">{rupees.format(p.price)}</p>
                       )}
                     </div>
                   </li>

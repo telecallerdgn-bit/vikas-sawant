@@ -16,13 +16,14 @@ type Card = {
   labelCls: string;
 };
 
+// Rang dashboard ke cards jaise: halka neela/lavender gradient, gehre rang ka icon box aur usi rang ka label.
 const CARDS: Card[] = [
   {
     key: "SUBMITTED",
     label: "Submitted",
     sub: "Waiting for review",
     icon: FileText,
-    card: "border-sky-100 from-sky-50 to-blue-100/70",
+    card: "border-blue-100 from-blue-50 to-indigo-100/70",
     iconBox: "bg-blue-500 text-white",
     labelCls: "text-blue-700",
   },
@@ -31,18 +32,18 @@ const CARDS: Card[] = [
     label: "Under review",
     sub: "Being checked",
     icon: Search,
-    card: "border-amber-100 from-amber-50 to-orange-100/70",
-    iconBox: "bg-orange-500 text-white",
-    labelCls: "text-orange-700",
+    card: "border-sky-100 from-sky-50 to-indigo-100/70",
+    iconBox: "bg-sky-500 text-white",
+    labelCls: "text-sky-700",
   },
   {
     key: "MORE_INFO",
     label: "More info",
     sub: "Waiting for applicant",
     icon: ClipboardList,
-    card: "border-violet-100 from-violet-50 to-purple-100/70",
-    iconBox: "bg-violet-500 text-white",
-    labelCls: "text-violet-700",
+    card: "border-indigo-100 from-indigo-50 to-violet-100/70",
+    iconBox: "bg-indigo-500 text-white",
+    labelCls: "text-indigo-700",
   },
   {
     key: "APPROVED",
@@ -63,14 +64,14 @@ const CARDS: Card[] = [
     labelCls: "text-emerald-700",
   },
   {
-    key: "REJECTED",
-    label: "Rejected",
-    sub: "Not approved",
-    icon: UserX,
-    card: "border-rose-100 from-rose-50 to-red-100/70",
-    iconBox: "bg-rose-500 text-white",
-    labelCls: "text-rose-700",
-  },
+  key: "REJECTED",
+  label: "Rejected",
+  sub: "Not approved",
+  icon: UserX,
+  card: "border-blue-200 from-blue-50 to-blue-100/80",
+  iconBox: "bg-blue-400 text-white",
+  labelCls: "text-blue-600",
+},
 ];
 
 type SearchParams = Promise<{ status?: string }>;

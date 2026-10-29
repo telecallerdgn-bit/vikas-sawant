@@ -102,7 +102,7 @@ export default function SiteFooter() {
 
         <div className="relative mx-auto grid max-w-6xl items-end gap-8 px-4 pb-24 pt-14 md:grid-cols-[1.3fr_1fr] md:pb-28 md:pt-16">
           <div className="self-center">
-            <h2 className="text-3xl font-black leading-tight md:text-5xl">
+            <h2 className="text-3xl font-bold leading-tight md:text-5xl">
               Ready to get{" "}
               <span className="underline decoration-gold-400 decoration-4 underline-offset-8">started?</span>
               <br />

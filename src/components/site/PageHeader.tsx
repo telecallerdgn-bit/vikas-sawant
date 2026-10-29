@@ -127,7 +127,7 @@ export default function PageHeader({
             <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white">
               <BadgeIcon className="h-4 w-4 text-gold-400" /> {badge.label}
             </span>
-            <h1 className="mt-5 text-4xl font-black text-white md:text-5xl">{title}</h1>
+            <h1 className="mt-5 text-4xl font-bold text-white md:text-5xl">{title}</h1>
             <p className="mx-auto mt-3 max-w-2xl text-slate-200">{text}</p>
           </div>
         </Reveal>

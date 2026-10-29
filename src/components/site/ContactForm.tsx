@@ -102,7 +102,7 @@ export default function ContactForm() {
         <span className="flex h-20 w-20 items-center justify-center rounded-full bg-gold-400 text-brand-900 ring-8 ring-gold-100">
           <CircleCheck className="h-10 w-10" />
         </span>
-        <h2 className="mt-6 text-3xl font-black text-brand-900">Message sent</h2>
+        <h2 className="mt-6 text-3xl font-bold text-brand-900">Message sent</h2>
         <p className="mt-3 max-w-sm text-slate-600">Thank you for reaching out. Our team will get back to you soon.</p>
         <button
           type="button"
@@ -128,7 +128,7 @@ export default function ContactForm() {
           <MessageSquare className="h-7 w-7" />
         </span>
         <div>
-          <h2 className="text-2xl font-black text-brand-900">Send us a message</h2>
+          <h2 className="text-2xl font-bold text-brand-900">Send us a message</h2>
           <p className="text-sm text-slate-500">Fill in the form and we will reply by email or phone.</p>
         </div>
       </div>

@@ -28,7 +28,7 @@ export default function StatsBand() {
                 key={s.label}
                 className={`px-4 text-center ${i > 0 ? "md:border-l md:border-white/15" : ""} ${i % 2 === 1 ? "border-l border-white/15 md:border-l" : ""}`}
               >
-                <dd className="text-4xl font-black text-gold-400 md:text-5xl">{s.value}</dd>
+                <dd className="text-4xl font-bold text-gold-400 md:text-5xl">{s.value}</dd>
                 <dt className="mt-1 text-sm font-medium text-brand-100">{s.label}</dt>
               </div>
             ))}

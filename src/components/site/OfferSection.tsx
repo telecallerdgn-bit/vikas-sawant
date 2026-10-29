@@ -52,7 +52,7 @@ function Card({
       {/* Big faint number, turns gold on hover */}
       <span
         aria-hidden
-        className="pointer-events-none absolute -right-1 -top-3 select-none text-7xl font-black leading-none text-brand-50 transition duration-500 group-hover:text-gold-100"
+        className="pointer-events-none absolute -right-1 -top-3 select-none text-7xl font-bold leading-none text-brand-50 transition duration-500 group-hover:text-gold-100"
       >
         {n}
       </span>
@@ -69,7 +69,7 @@ function Card({
       <span className="relative mt-5 inline-block w-fit rounded-full bg-gold-100 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-gold-800">
         {tag}
       </span>
-      <h3 className="relative mt-3 text-xl font-black leading-snug text-brand-900">{title}</h3>
+      <h3 className="relative mt-3 text-xl font-bold leading-snug text-brand-900">{title}</h3>
       <p className="relative mt-1.5 text-sm leading-relaxed text-slate-600">{text}</p>
 
       {/* Gold line that grows on hover */}
@@ -118,7 +118,7 @@ export default function OfferSection() {
             <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-1.5 text-sm font-semibold text-brand-900 shadow-sm">
               <Sparkles className="h-4 w-4 text-gold-600" /> Why students choose us
             </span>
-            <h2 className="mt-5 text-3xl font-black tracking-tight text-brand-900 md:text-5xl">
+            <h2 className="mt-5 text-3xl font-bold tracking-tight text-brand-900 md:text-5xl">
               What we <span className="relative inline-block">
                 offer
                 <span aria-hidden className="absolute -bottom-1 left-0 -z-10 h-3 w-full rounded-full bg-gold-400/70" />
@@ -137,7 +137,7 @@ export default function OfferSection() {
             <article className="group relative flex h-full min-h-[20rem] flex-col justify-between overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700 p-8 text-white shadow-xl shadow-brand-900/25 md:p-10">
               <span
                 aria-hidden
-                className="pointer-events-none absolute -right-4 -top-10 select-none text-[11rem] font-black leading-none text-white/[0.06]"
+                className="pointer-events-none absolute -right-4 -top-10 select-none text-[11rem] font-bold leading-none text-white/[0.06]"
               >
                 01
               </span>
@@ -167,7 +167,7 @@ export default function OfferSection() {
                 <span className="mt-6 inline-block rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-gold-300">
                   Teaching
                 </span>
-                <h3 className="mt-3 text-3xl font-black md:text-4xl">Expert faculty</h3>
+                <h3 className="mt-3 text-3xl font-bold md:text-4xl">Expert faculty</h3>
                 <p className="mt-2 max-w-md text-brand-100">Experienced teachers who guide every student.</p>
               </div>
 
@@ -231,7 +231,7 @@ export default function OfferSection() {
               />
               <span
                 aria-hidden
-                className="pointer-events-none absolute -left-3 -top-8 select-none text-[9rem] font-black leading-none text-brand-900/[0.07]"
+                className="pointer-events-none absolute -left-3 -top-8 select-none text-[9rem] font-bold leading-none text-brand-900/[0.07]"
               >
                 06
               </span>
@@ -244,7 +244,7 @@ export default function OfferSection() {
                   <span className="inline-block rounded-full bg-brand-900 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-gold-300">
                     Free for every student
                   </span>
-                  <h3 className="mt-2 text-2xl font-black md:text-3xl">Free interview guidance</h3>
+                  <h3 className="mt-2 text-2xl font-bold md:text-3xl">Free interview guidance</h3>
                   <p className="mt-1 max-w-md font-medium text-brand-800">Be job-ready for the final round.</p>
                 </div>
               </div>

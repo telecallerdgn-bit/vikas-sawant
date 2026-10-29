@@ -68,7 +68,7 @@ export default function PartnerApplyPage() {
             <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-semibold text-gold-300 backdrop-blur">
               <Handshake className="h-4 w-4" /> {SITE.brand} Partners
             </span>
-            <h1 className="mt-5 text-4xl font-black leading-tight md:text-5xl">
+            <h1 className="mt-5 text-4xl font-bold leading-tight md:text-5xl">
               Become a <span className="italic text-gold-400">partner</span>
             </h1>
             <p className="mt-4 max-w-xl text-brand-100">
@@ -85,12 +85,12 @@ export default function PartnerApplyPage() {
                   <div className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur">
                     <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gold-400 text-brand-900">
                       <Icon className="h-6 w-6" />
-                      <span className="absolute -right-1.5 -top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-white text-xs font-black text-brand-900">
+                      <span className="absolute -right-1.5 -top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-white text-xs font-bold text-brand-900">
                         {i + 1}
                       </span>
                     </span>
                     <div>
-                      <p className="font-black">{s.title}</p>
+                      <p className="font-bold">{s.title}</p>
                       <p className="text-sm text-brand-100">{s.text}</p>
                     </div>
                   </div>

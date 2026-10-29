@@ -128,7 +128,7 @@ export default function About() {
           <Float className="absolute left-0 top-10 flex items-center gap-3 rounded-2xl bg-brand-900 px-5 py-4 text-white shadow-xl" duration={7}>
             <Award className="h-9 w-9 text-gold-400" />
             <div>
-              <p className="text-3xl font-black leading-none">15+</p>
+              <p className="text-3xl font-bold leading-none">15+</p>
               <p className="mt-1 text-sm text-brand-100">years of coaching</p>
             </div>
           </Float>
@@ -144,7 +144,7 @@ export default function About() {
                 <Users className="h-5 w-5" />
               </span>
               <div>
-                <p className="text-xl font-black leading-none text-brand-900">6,500+</p>
+                <p className="text-xl font-bold leading-none text-brand-900">6,500+</p>
                 <p className="mt-1 text-xs text-slate-500">students in govt jobs</p>
               </div>
             </div>
@@ -156,7 +156,7 @@ export default function About() {
           <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-1.5 text-sm font-semibold text-brand-800">
             <BookOpen className="h-4 w-4" /> About us
           </span>
-          <h2 className="mt-5 text-3xl font-black leading-tight text-brand-900 md:text-4xl">
+          <h2 className="mt-5 text-3xl font-bold leading-tight text-brand-900 md:text-4xl">
             Coaching that makes you job-ready for bank and government exams
           </h2>
           <p className="mt-5 max-w-xl text-slate-600">

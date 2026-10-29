@@ -57,7 +57,7 @@ export default function BlogCard({ post }: { post: PostCardData }) {
           </p>
         )}
 
-        <h3 className="relative mt-4 text-lg font-black leading-snug text-brand-900 transition group-hover:text-brand-700">
+        <h3 className="relative mt-4 text-lg font-bold leading-snug text-brand-900 transition group-hover:text-brand-700">
           {post.title}
         </h3>
         <span className="relative mt-2 block h-1 w-10 rounded-full bg-gold-400 transition-all duration-300 group-hover:w-24" />

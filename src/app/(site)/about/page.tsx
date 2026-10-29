@@ -41,7 +41,7 @@ const photo = findDirectorPhoto();
 function SectionTitle({ children }: { children: ReactNode }) {
   return (
     <div>
-      <h2 className="text-3xl font-black tracking-tight text-brand-900 md:text-4xl">{children}</h2>
+      <h2 className="text-3xl font-bold tracking-tight text-brand-900 md:text-4xl">{children}</h2>
       {/* Website ki tarah double line */}
       <span className="mt-3 block h-1.5 w-40 border-y-2 border-brand-900/70" aria-hidden="true" />
     </div>
@@ -147,7 +147,7 @@ export default function AboutPage() {
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gold-400 text-brand-900">
                 <Eye className="h-6 w-6" />
               </span>
-              <h3 className="mt-4 text-xl font-black text-brand-900">Our Vision</h3>
+              <h3 className="mt-4 text-xl font-bold text-brand-900">Our Vision</h3>
               <p className="mt-2 leading-relaxed text-slate-700">
                 This belief comes from our vision to provide our students with the best possible knowledge and skills
                 that are necessary to flourish in competitive exams.
@@ -160,7 +160,7 @@ export default function AboutPage() {
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gold-400 text-brand-900">
                 <Target className="h-6 w-6" />
               </span>
-              <h3 className="mt-4 text-xl font-black text-brand-900">Our Mission</h3>
+              <h3 className="mt-4 text-xl font-bold text-brand-900">Our Mission</h3>
               <p className="mt-2 leading-relaxed text-slate-700">
                 In today&apos;s ever-increasing competitive nature of exams, if one aspires to succeed it is imperative to
                 enhance one&apos;s Aptitude and Verbal abilities. Our mission is to provide the best training and take
@@ -205,7 +205,7 @@ export default function AboutPage() {
             <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-gold-400/15" aria-hidden="true" />
             <div className="relative flex flex-wrap items-center justify-between gap-6">
               <div className="max-w-xl">
-                <h2 className="text-3xl font-black">Ready to start your preparation?</h2>
+                <h2 className="text-3xl font-bold">Ready to start your preparation?</h2>
                 <p className="mt-2 text-brand-100">
                   Choose a course and the mode that suits you, or talk to our team first.
                 </p>

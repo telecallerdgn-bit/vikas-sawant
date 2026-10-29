@@ -214,7 +214,7 @@ export default function CategoryStrip({ categories }: { categories: CategoryData
             <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-semibold text-gold-300 backdrop-blur">
               <LayoutGrid className="h-4 w-4" /> Explore
             </span>
-            <h2 className="mt-5 text-3xl font-black text-white md:text-4xl">Browse by category</h2>
+            <h2 className="mt-5 text-3xl font-bold text-white md:text-4xl">Browse by category</h2>
             <p className="mx-auto mt-3 max-w-2xl text-brand-100">Pick your exam and see all the courses for it.</p>
           </div>
         </Reveal>
@@ -278,7 +278,7 @@ export default function CategoryStrip({ categories }: { categories: CategoryData
                       <Icon className="h-7 w-7" />
                     </span>
 
-                    <h3 className="relative mt-5 text-lg font-black leading-snug text-brand-900">{c.name}</h3>
+                    <h3 className="relative mt-5 text-lg font-bold leading-snug text-brand-900">{c.name}</h3>
 
                     <div className="relative mt-4 flex items-center justify-between">
                       <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-bold text-brand-900">

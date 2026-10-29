@@ -77,7 +77,7 @@ export default function AuthShell({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo.webp" alt="" className="h-10 w-auto" />
           </span>
-          <span className="text-lg font-black leading-tight">{SITE.brand}</span>
+          <span className="text-lg font-bold leading-tight">{SITE.brand}</span>
         </div>
 
         {/* Message */}
@@ -86,7 +86,7 @@ export default function AuthShell({
             <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-semibold text-gold-300 backdrop-blur">
               <GraduationCap className="h-4 w-4" /> {badge}
             </span>
-            <h1 className="mt-5 text-3xl font-black leading-tight sm:text-4xl lg:text-5xl">{title}</h1>
+            <h1 className="mt-5 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">{title}</h1>
             <p className="mt-4 hidden max-w-md text-brand-100 sm:block">{text}</p>
           </Reveal>
 

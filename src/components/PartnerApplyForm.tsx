@@ -66,10 +66,10 @@ function Group({ n, title, children }: { n: number; title: string; children: Rea
   return (
     <section className="space-y-4">
       <div className="flex items-center gap-3">
-        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gold-400 text-xs font-black text-brand-900">
+        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gold-400 text-xs font-bold text-brand-900">
           {n}
         </span>
-        <h3 className="text-sm font-black uppercase tracking-widest text-brand-900">{title}</h3>
+        <h3 className="text-sm font-bold uppercase tracking-widest text-brand-900">{title}</h3>
         <span className="h-px flex-1 bg-brand-100" />
       </div>
       <div className="grid gap-4 sm:grid-cols-2">{children}</div>
@@ -141,7 +141,7 @@ export default function PartnerApplyForm({ districts }: { districts: District[] 
         <span className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gold-400 text-brand-900 ring-8 ring-gold-100">
           <CircleCheck className="h-10 w-10" />
         </span>
-        <h2 className="mt-6 text-3xl font-black text-brand-900">Application submitted</h2>
+        <h2 className="mt-6 text-3xl font-bold text-brand-900">Application submitted</h2>
         <p className="mx-auto mt-3 max-w-md text-slate-600">
           We will review it shortly. Use the status box on this page with your email and mobile to follow your
           application.
@@ -168,7 +168,7 @@ export default function PartnerApplyForm({ districts }: { districts: District[] 
           <Handshake className="h-7 w-7" />
         </span>
         <div>
-          <h2 className="text-2xl font-black text-brand-900">Partner application</h2>
+          <h2 className="text-2xl font-bold text-brand-900">Partner application</h2>
           <p className="text-sm text-slate-500">Fill in your details. It takes a few minutes.</p>
         </div>
       </div>

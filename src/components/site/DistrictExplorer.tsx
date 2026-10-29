@@ -146,7 +146,7 @@ export default function DistrictExplorer({
             <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-1.5 text-sm font-semibold text-brand-800">
               <MapPin className="h-4 w-4" /> Our centres
             </span>
-            <h2 className="mt-5 text-3xl font-black text-brand-900 md:text-4xl">Explore by district</h2>
+            <h2 className="mt-5 text-3xl font-bold text-brand-900 md:text-4xl">Explore by district</h2>
             <p className="mx-auto mt-3 max-w-2xl text-slate-600">Explore VSA Centres in your preferred district.</p>
           </div>
         </Reveal>
@@ -201,7 +201,7 @@ export default function DistrictExplorer({
                     className="h-full rounded-3xl bg-brand-50 p-5 transition duration-300 group-hover:bg-gold-100/60"
                     style={{ WebkitMaskImage: BITE, maskImage: BITE }}
                   >
-                    <h3 className="pr-20 text-xl font-black leading-snug text-brand-900">{d.name}</h3>
+                    <h3 className="pr-20 text-xl font-bold leading-snug text-brand-900">{d.name}</h3>
                     <p className="mt-1 flex items-center gap-1.5 text-sm text-slate-500">
                       <Building2 className="h-4 w-4 text-brand-600" />
                       {d.centres} {d.centres === 1 ? "Centre" : "Centres"}

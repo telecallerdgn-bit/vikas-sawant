@@ -3,12 +3,17 @@
 :root {
   --background: #ffffff;
   --foreground: #111827;
+
+  /* Older files still ask for these names. They all point to Ubuntu now. */
+  --font-lato: var(--font-ubuntu);
+  --font-poppins: var(--font-ubuntu);
+  --font-geist-sans: var(--font-ubuntu);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-ubuntu), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
   /* Brand navy (from the website) */
@@ -39,11 +44,67 @@
   --color-alert: #fa0000;
 }
 
+/*
+  Dashboards ke liye: orange, purple, violet aur rose ko neela bana diya hai.
+  Ye ek hi block hai. Wapas purana rang chahiye to poora block delete kar do.
+  Public website par asar nahi padta, kyunki neeche .site-theme apne rang khud set karta hai.
+*/
+@theme {
+  --color-orange-50: oklch(0.97 0.014 254.604);
+  --color-orange-100: oklch(0.932 0.032 255.585);
+  --color-orange-200: oklch(0.882 0.059 254.128);
+  --color-orange-300: oklch(0.809 0.105 251.813);
+  --color-orange-400: oklch(0.707 0.165 254.624);
+  --color-orange-500: oklch(0.623 0.214 259.815);
+  --color-orange-600: oklch(0.546 0.245 262.881);
+  --color-orange-700: oklch(0.488 0.243 264.376);
+  --color-orange-800: oklch(0.424 0.199 265.638);
+  --color-orange-900: oklch(0.379 0.146 265.522);
+  --color-orange-950: oklch(0.282 0.091 267.935);
+
+  --color-purple-50: oklch(0.97 0.014 254.604);
+  --color-purple-100: oklch(0.932 0.032 255.585);
+  --color-purple-200: oklch(0.882 0.059 254.128);
+  --color-purple-300: oklch(0.809 0.105 251.813);
+  --color-purple-400: oklch(0.707 0.165 254.624);
+  --color-purple-500: oklch(0.623 0.214 259.815);
+  --color-purple-600: oklch(0.546 0.245 262.881);
+  --color-purple-700: oklch(0.488 0.243 264.376);
+  --color-purple-800: oklch(0.424 0.199 265.638);
+  --color-purple-900: oklch(0.379 0.146 265.522);
+  --color-purple-950: oklch(0.282 0.091 267.935);
+
+  --color-violet-50: oklch(0.97 0.014 254.604);
+  --color-violet-100: oklch(0.932 0.032 255.585);
+  --color-violet-200: oklch(0.882 0.059 254.128);
+  --color-violet-300: oklch(0.809 0.105 251.813);
+  --color-violet-400: oklch(0.707 0.165 254.624);
+  --color-violet-500: oklch(0.623 0.214 259.815);
+  --color-violet-600: oklch(0.546 0.245 262.881);
+  --color-violet-700: oklch(0.488 0.243 264.376);
+  --color-violet-800: oklch(0.424 0.199 265.638);
+  --color-violet-900: oklch(0.379 0.146 265.522);
+  --color-violet-950: oklch(0.282 0.091 267.935);
+
+  --color-rose-50: oklch(0.97 0.014 254.604);
+  --color-rose-100: oklch(0.932 0.032 255.585);
+  --color-rose-200: oklch(0.882 0.059 254.128);
+  --color-rose-300: oklch(0.809 0.105 251.813);
+  --color-rose-400: oklch(0.707 0.165 254.624);
+  --color-rose-500: oklch(0.623 0.214 259.815);
+  --color-rose-600: oklch(0.546 0.245 262.881);
+  --color-rose-700: oklch(0.488 0.243 264.376);
+  --color-rose-800: oklch(0.424 0.199 265.638);
+  --color-rose-900: oklch(0.379 0.146 265.522);
+  --color-rose-950: oklch(0.282 0.091 267.935);
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-ubuntu), ui-sans-serif, system-ui, sans-serif;
 }
+
 /* Website colours from the logo: navy and gold. Only the public site uses this class. */
 .site-theme {
   --color-orange-50: #fff8e1;
@@ -61,6 +122,3 @@ body {
 .site-theme .bg-orange-500 { color: #0b2149; }
 .site-theme .hover\:bg-orange-600:hover { background-color: #e3a600; }
 .site-theme .text-orange-500 { color: #a66e00; }
-
-
-
