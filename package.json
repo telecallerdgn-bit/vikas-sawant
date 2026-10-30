@@ -9,7 +9,12 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:prod:status": "dotenv -o -e .env.tidb -- prisma migrate status",
+"db:prod:migrate": "dotenv -o -e .env.tidb -- prisma migrate deploy",
+"db:prod:copy": "tsx prisma/copy-to-prod.ts",
+"db:prod:admin": "dotenv -o -e .env.tidb -- tsx prisma/create-admin.ts",
+"db:prod:student-admin": "dotenv -o -e .env.tidb -- tsx prisma/create-student-admin.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
@@ -30,6 +35,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv-cli": "^11.1.0",
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
     "tailwindcss": "^4",
